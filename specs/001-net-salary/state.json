@@ -1,0 +1,81 @@
+{
+  "schema_version": 1,
+  "feature": "001-net-salary",
+  "title": "Compute net monthly salary from gross salary with CCSS and income tax deductions",
+  "type": "feature",
+  "scope": [
+    "app"
+  ],
+  "branch": "feat/001-net-salary",
+  "base_branch": "main",
+  "created_at": "2026-09-27T10:46:24.489Z",
+  "stage": "plan",
+  "status": "in_progress",
+  "approvals": {
+    "spec": {
+      "at": "2026-09-27T11:01:05.544Z",
+      "note": "approved, commit it"
+    },
+    "plan": null,
+    "tasks": null,
+    "tests": null,
+    "implement": null,
+    "verify": null,
+    "review": null,
+    "docs": null,
+    "close": null
+  },
+  "commits": {},
+  "iterations": {
+    "tests": 0,
+    "implement": 0,
+    "review": 0
+  },
+  "max_iterations": 3,
+  "red_check": {
+    "result": null,
+    "at": null
+  },
+  "verify": {
+    "result": null,
+    "at": null
+  },
+  "review": {
+    "verdict": null,
+    "at": null
+  },
+  "tests_snapshot": null,
+  "bypass": false,
+  "history": [
+    {
+      "at": "2026-09-27T10:46:24.489Z",
+      "stage": "spec",
+      "event": "created",
+      "note": "rama feat/001-net-salary desde main"
+    },
+    {
+      "at": "2026-09-27T10:48:47.858Z",
+      "stage": "spec",
+      "event": "started",
+      "note": "Delegate spec to spec-writer"
+    },
+    {
+      "at": "2026-09-27T10:50:42.598Z",
+      "stage": "spec",
+      "event": "needs_input",
+      "note": "Q1-Q9: legal year/brackets, CCSS/LPT rates, LPT line, tax credits, min base, limits, decimals, tax breakdown, rounding"
+    },
+    {
+      "at": "2026-09-27T10:58:30.445Z",
+      "stage": "spec",
+      "event": "done",
+      "note": "Spec with 6 REQ + 2 NFR, 33 AC; Q1-Q9 resolved (accept all)"
+    },
+    {
+      "at": "2026-09-27T11:01:05.544Z",
+      "stage": "spec",
+      "event": "approved",
+      "note": "approved, commit it"
+    }
+  ]
+}
