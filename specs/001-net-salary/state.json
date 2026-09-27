@@ -9,7 +9,7 @@
   "branch": "feat/001-net-salary",
   "base_branch": "main",
   "created_at": "2026-09-27T10:46:24.489Z",
-  "stage": "tasks",
+  "stage": "tests",
   "status": "in_progress",
   "approvals": {
     "spec": {
@@ -20,7 +20,10 @@
       "at": "2026-09-27T11:20:33.400Z",
       "note": "1. Approved. 2.Yes"
     },
-    "tasks": null,
+    "tasks": {
+      "at": "2026-09-27T17:27:48.565Z",
+      "note": "approved, commit it"
+    },
     "tests": null,
     "implement": null,
     "verify": null,
@@ -29,7 +32,8 @@
     "close": null
   },
   "commits": {
-    "spec": "c89f3b8"
+    "spec": "c89f3b8",
+    "plan": "a6580ec"
   },
   "iterations": {
     "tests": 0,
@@ -105,6 +109,30 @@
       "stage": "plan",
       "event": "approved",
       "note": "1. Approved. 2.Yes"
+    },
+    {
+      "at": "2026-09-27T11:20:41.666Z",
+      "stage": "tasks",
+      "event": "commit",
+      "note": "plan: a6580ec"
+    },
+    {
+      "at": "2026-09-27T11:20:41.816Z",
+      "stage": "tasks",
+      "event": "started",
+      "note": "Delegate tasks to task-breaker"
+    },
+    {
+      "at": "2026-09-27T11:23:41.622Z",
+      "stage": "tasks",
+      "event": "done",
+      "note": "31 tasks (4 scaffold, 2 config, 19 test, 6 impl); all 33 AC covered"
+    },
+    {
+      "at": "2026-09-27T17:27:48.565Z",
+      "stage": "tasks",
+      "event": "approved",
+      "note": "approved, commit it"
     }
   ]
 }
