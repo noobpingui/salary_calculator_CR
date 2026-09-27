@@ -9,7 +9,7 @@
   "branch": "feat/001-net-salary",
   "base_branch": "main",
   "created_at": "2026-09-27T10:46:24.489Z",
-  "stage": "tests",
+  "stage": "implement",
   "status": "in_progress",
   "approvals": {
     "spec": {
@@ -24,7 +24,10 @@
       "at": "2026-09-27T17:27:48.565Z",
       "note": "approved, commit it"
     },
-    "tests": null,
+    "tests": {
+      "at": "2026-09-27T18:05:15.419Z",
+      "note": "approved, commit it"
+    },
     "implement": null,
     "verify": null,
     "review": null,
@@ -33,7 +36,8 @@
   },
   "commits": {
     "spec": "c89f3b8",
-    "plan": "a6580ec"
+    "plan": "a6580ec",
+    "tasks": "1121425"
   },
   "iterations": {
     "tests": 0,
@@ -42,8 +46,8 @@
   },
   "max_iterations": 3,
   "red_check": {
-    "result": null,
-    "at": null
+    "result": "PASS",
+    "at": "2026-09-27T17:56:36.490Z"
   },
   "verify": {
     "result": null,
@@ -53,7 +57,17 @@
     "verdict": null,
     "at": null
   },
-  "tests_snapshot": null,
+  "tests_snapshot": {
+    "at": "2026-09-27T18:05:15.302Z",
+    "reason": "tests approved",
+    "sha256": {
+      "tests/unit/gross-salary.test.ts": "59a1c4eb205f33a83b05aaa8c0f9d90cf32238f63674dd2a772e0736581cad70",
+      "tests/unit/money.test.ts": "b5918273f26d986ae98f1f98ee71807eb195a073dc3ff00f471b3ef0be6f2efd",
+      "tests/unit/net-salary-view.test.ts": "23fd95328a0c046ea59535185b46762247084d0e55fde83e80bd7d2f8a03b6c7",
+      "tests/unit/net-salary.test.ts": "d8eb9a0b1f938e50a6ffbb0e9d2e9c334f0394336913ab757dd63c5ad9ca9ee0",
+      "tests/unit/privacy.test.ts": "899908f35a6d396e58086b0fbb7dcc9fa9dc4f90b43cd313add3945f282a3569"
+    }
+  },
   "bypass": false,
   "history": [
     {
@@ -131,6 +145,42 @@
     {
       "at": "2026-09-27T17:27:48.565Z",
       "stage": "tasks",
+      "event": "approved",
+      "note": "approved, commit it"
+    },
+    {
+      "at": "2026-09-27T17:27:48.767Z",
+      "stage": "tests",
+      "event": "commit",
+      "note": "tasks: 1121425"
+    },
+    {
+      "at": "2026-09-27T17:27:54.910Z",
+      "stage": "tests",
+      "event": "started",
+      "note": "Scaffold stubs, then delegate tests to test-author"
+    },
+    {
+      "at": "2026-09-27T17:56:36.490Z",
+      "stage": "tests",
+      "event": "result",
+      "note": "red PASS: 54 tests fail red-legit with 'not implemented' from scaffolds; 1 pre-existing invariant test (privacy guard) passes; all 33 AC covered; ready for implementation"
+    },
+    {
+      "at": "2026-09-27T17:58:23.032Z",
+      "stage": "tests",
+      "event": "done",
+      "note": "55 tests (T-010..T-028) + 6 scaffolds; red check PASS: 54 not-implemented, 1 privacy invariant passes"
+    },
+    {
+      "at": "2026-09-27T18:05:15.302Z",
+      "stage": "tests",
+      "event": "snapshot",
+      "note": "5 archivo(s) de test: tests approved"
+    },
+    {
+      "at": "2026-09-27T18:05:15.419Z",
+      "stage": "tests",
       "event": "approved",
       "note": "approved, commit it"
     }
