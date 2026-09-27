@@ -9,7 +9,7 @@
   "branch": "feat/001-net-salary",
   "base_branch": "main",
   "created_at": "2026-09-27T10:46:24.489Z",
-  "stage": "docs",
+  "stage": "close",
   "status": "in_progress",
   "approvals": {
     "spec": {
@@ -40,7 +40,10 @@
       "at": "2026-09-27T18:59:16.058Z",
       "note": "approved"
     },
-    "docs": null,
+    "docs": {
+      "at": "2026-09-27T19:03:51.653Z",
+      "note": "approved"
+    },
     "close": null
   },
   "commits": {
@@ -49,7 +52,8 @@
     "tasks": "1121425",
     "tests": "4ac2b39",
     "implement": "3320748",
-    "verify": "13486b7"
+    "verify": "13486b7",
+    "review": "77f8afe"
   },
   "iterations": {
     "tests": 0,
@@ -279,6 +283,30 @@
       "stage": "docs",
       "event": "note",
       "note": "Review findings F1-F5 deferred as follow-ups (see review.md)"
+    },
+    {
+      "at": "2026-09-27T18:59:20.172Z",
+      "stage": "docs",
+      "event": "commit",
+      "note": "review: 77f8afe"
+    },
+    {
+      "at": "2026-09-27T18:59:20.364Z",
+      "stage": "docs",
+      "event": "started",
+      "note": "Delegate docs to doc-keeper"
+    },
+    {
+      "at": "2026-09-27T19:01:23.661Z",
+      "stage": "docs",
+      "event": "done",
+      "note": "README + CLAUDE.md Proyecto updated; docs-report with F1-F5 follow-ups"
+    },
+    {
+      "at": "2026-09-27T19:03:51.653Z",
+      "stage": "docs",
+      "event": "approved",
+      "note": "approved"
     }
   ]
 }
