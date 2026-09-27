@@ -1,97 +1,76 @@
 # Verify report 001 — Net monthly salary from gross salary (CCSS, LPT and income tax)
 
-- **Mode:** red (after tests stage)
-- **Date:** 2026-09-27T17:54:30.256Z · **Branch:** `feat/001-net-salary` @ `11214252b9bcfcbb5be612d22e778673024cb9cb` · **Base:** `main`
+- **Mode:** full (verify stage)
+- **Date:** 2026-09-27T18:27:34.207Z · **Branch:** `feat/001-net-salary` @ `3320748aca24e03f14b76e0c4231c150e57aade1` · **Base:** `main`
 - **Result:** PASS
 
 ## 1. Commands executed
 
 | Scope | Command (cwd) | Result | Output summary |
 |---|---|---|---|
-| app | `npx vitest run {files}` (`.`) | ❌/✅ | 54 failed, 1 passed (55 total) |
+| app | `npm test` (`.`) | ✅ | 56 passed (6 test files) |
+| app | `npm run lint` (`.`) | ✅ | No errors or warnings |
+| app | `npm run typecheck` (`.`) | ✅ | No type errors |
+| app | `npm run build` (`.`) | ✅ | dist/ built successfully (3 files, 5.71 kB) |
 
-### Test execution details
+### Test results
+All 56 tests pass:
+- 55 new tests (T-010 to T-028): cover all 33 acceptance criteria with `SDD:` markers
+- 1 pre-existing invariant test: privacy guard (passes)
 
-All 55 new tests (T-010 to T-028) were executed. Test results:
-
-- **54 tests FAILED** with `Error: not implemented` from scaffold stubs (RED LEGIT):
-  - `divideRoundHalfUp` (3 tests): scaffold throws "not implemented"
-  - `centsToNumber` (3 tests): scaffold throws "not implemented"
-  - `parseGrossSalary` (6 tests): scaffold throws "not implemented"
-  - `calculateContribution` (4 tests): scaffold throws "not implemented"
-  - `calculateIncomeTax` (5 tests): scaffold throws "not implemented"
-  - `calculateNetSalary` (7 tests): scaffold throws "not implemented"
-  - `presentNetSalary` (11 tests): scaffold throws "not implemented"
-  - Privacy function tests (2 tests): scaffold/implementation missing
-
-- **1 test PASSED**: T-028 "does not reference network or storage APIs anywhere under src/" — This is a static code verification test that checks the source files do not contain forbidden API calls (`fetch`, `XMLHttpRequest`, `WebSocket`, `sendBeacon`, `localStorage`, `sessionStorage`, `indexedDB`, `document.cookie`). This test passes as a **pre-existing invariant**: no implementation has been added yet, so no forbidden APIs are present. This is acceptable under the constitution because:
-  - It verifies a structural requirement (NFR-001: privacy)
-  - It is a legitimate guard test that should always pass
-  - It does not test missing behavior; it tests that the code satisfies a constraint
-
-### Scaffold stubs verification
-
-All scaffold stubs conform to Art. B5.6 and P1.6:
-
-- `src/domain/money.ts`: `divideRoundHalfUp` and `centsToNumber` throw exactly `new Error("not implemented")` ✓
-- `src/domain/gross-salary.ts`: `parseGrossSalary` throws exactly `new Error("not implemented")` ✓
-- `src/domain/net-salary.ts`: `calculateContribution`, `calculateIncomeTax`, `calculateNetSalary` throw exactly `new Error("not implemented")` ✓
-- `src/ui/net-salary-view.ts`: `presentNetSalary` throws exactly `new Error("not implemented")` ✓
-- Config files (`LEGAL_PARAMETERS_2026`, `GROSS_SALARY_ERROR_MESSAGES`) contain real values, not scaffolds ✓
+### Build artifacts
+- `dist/index.html` 0.42 kB (gzip 0.28 kB)
+- `dist/assets/index-CP3SrkOm.css` 0.66 kB (gzip 0.35 kB)
+- `dist/assets/index-0j2czpOj.js` 4.63 kB (gzip 2.04 kB)
 
 ## 2. Traceability
 
-| REQ / NFR | AC | Test tasks | Tests with `SDD:` | Status |
+| REQ / NFR | AC | Tasks | Tests with `SDD:` | Status |
 |---|---|---|---|---|
-| REQ-001 | AC-001.1 | T-012, T-023 | `gross-salary.test.ts::empty` × 2, `net-salary-view.test.ts::empty` | ❌ (RED LEGIT) |
-| REQ-001 | AC-001.2 | T-013, T-023 | `gross-salary.test.ts::not-a-number`, `net-salary-view.test.ts::not-a-number` | ❌ (RED LEGIT) |
-| REQ-001 | AC-001.3 | T-013, T-023 | `gross-salary.test.ts::not-a-number` × 2, `net-salary-view.test.ts::not-a-number` | ❌ (RED LEGIT) |
-| REQ-001 | AC-001.4 | T-014, T-023 | `gross-salary.test.ts::negative`, `net-salary-view.test.ts::negative` | ❌ (RED LEGIT) |
-| REQ-001 | AC-001.5 | T-015, T-023 | `gross-salary.test.ts::too-many-decimals`, `net-salary-view.test.ts::too-many-decimals` | ❌ (RED LEGIT) |
-| REQ-001 | AC-001.6 | T-024, T-028 | `net-salary-view.test.ts::stateless`, `privacy.test.ts::replaceChildren` | ❌ (RED LEGIT) |
-| REQ-001 | AC-001.7 | T-016 | `gross-salary.test.ts::whitespace` × 3 | ❌ (RED LEGIT) |
-| REQ-002 | AC-002.1–002.4 | T-017 | `net-salary.test.ts::calculateContribution` × 4 | ❌ (RED LEGIT) |
-| REQ-003 | AC-003.1–003.7 | T-018 | `net-salary.test.ts::calculateIncomeTax` × 7 | ❌ (RED LEGIT) |
-| REQ-004 | AC-004.1–004.7 | T-019, T-020 | `net-salary.test.ts::calculateNetSalary` × 8 | ❌ (RED LEGIT) |
-| REQ-005 | AC-005.1–005.2 | T-010, T-021 | `money.test.ts::divideRoundHalfUp` × 3, `money.test.ts::centsToNumber` × 3, `net-salary.test.ts::rounding` × 2 | ❌ (RED LEGIT) |
-| REQ-006 | AC-006.1–006.4 | T-025, T-028 | `net-salary-view.test.ts::breakdown` × 4, `privacy.test.ts::placeholder` | ❌ (RED LEGIT) |
-| NFR-001 | AC-N001.1 | T-027, T-028 | `privacy.test.ts::never calls`, `privacy.test.ts::APIs` ✓ | ✅ / ❌ (mixed) |
-| NFR-002 | AC-N002.1 | T-022, T-026 | `net-salary.test.ts::legal-params` × 2, `net-salary-view.test.ts::legal-params` | ❌ (RED LEGIT) |
+| REQ-001 | AC-001.1 | T-012, T-023 | gross-salary.test.ts, net-salary-view.test.ts | ✅ PASS |
+| REQ-001 | AC-001.2 | T-013, T-023 | gross-salary.test.ts, net-salary-view.test.ts | ✅ PASS |
+| REQ-001 | AC-001.3 | T-013, T-023 | gross-salary.test.ts, net-salary-view.test.ts | ✅ PASS |
+| REQ-001 | AC-001.4 | T-014, T-023 | gross-salary.test.ts, net-salary-view.test.ts | ✅ PASS |
+| REQ-001 | AC-001.5 | T-015, T-023 | gross-salary.test.ts, net-salary-view.test.ts | ✅ PASS |
+| REQ-001 | AC-001.6 | T-024, T-028 | net-salary-view.test.ts, privacy.test.ts | ✅ PASS |
+| REQ-001 | AC-001.7 | T-016 | gross-salary.test.ts | ✅ PASS |
+| REQ-002 | AC-002.1–004 | T-017 | net-salary.test.ts | ✅ PASS |
+| REQ-003 | AC-003.1–007 | T-018 | net-salary.test.ts | ✅ PASS |
+| REQ-004 | AC-004.1–007 | T-019, T-020 | net-salary.test.ts | ✅ PASS |
+| REQ-005 | AC-005.1–002 | T-010, T-021 | money.test.ts, net-salary.test.ts | ✅ PASS |
+| REQ-006 | AC-006.1–004 | T-025, T-028 | net-salary-view.test.ts, privacy.test.ts | ✅ PASS |
+| NFR-001 | AC-N001.1 | T-027, T-028 | privacy.test.ts | ✅ PASS |
+| NFR-002 | AC-N002.1 | T-022, T-026 | net-salary.test.ts, net-salary-view.test.ts | ✅ PASS |
 
-**Summary of traceability:**
-- All 33 acceptance criteria are covered by tests with `SDD:` markers ✓
-- All REQ and NFR are covered by tasks ✓
-- All tasks in `tasks.md` marked `[x]` ✓
-- No `skip`, `xfail`, `.only` or equivalent new markers found ✓
+### Traceability summary
+- ✅ All 33 acceptance criteria traced to tests with `SDD:` markers and all tests pass
+- ✅ All REQ and NFR traced to tasks in `tasks.md`
+- ✅ All 31 tasks marked `[x]` (complete)
+- ✅ No new `skip`, `xfail`, `.only`, `xit`, or equivalent markers in test diff
+- ✅ Test snapshot SHA256 unchanged from tests stage:
+  - tests/unit/gross-salary.test.ts: `59a1c4eb205f33a83b05aaa8c0f9d90cf32238f63674dd2a772e0736581cad70`
+  - tests/unit/money.test.ts: `b5918273f26d986ae98f1f98ee71807eb195a073dc3ff00f471b3ef0be6f2efd`
+  - tests/unit/net-salary-view.test.ts: `23fd95328a0c046ea59535185b46762247084d0e55fde83e80bd7d2f8a03b6c7`
+  - tests/unit/net-salary.test.ts: `d8eb9a0b1f938e50a6ffbb0e9d2e9c334f0394336913ab757dd63c5ad9ca9ee0`
+  - tests/unit/privacy.test.ts: `899908f35a6d396e58086b0fbb7dcc9fa9dc4f90b43cd313add3945f282a3569`
 
 ## 3. Manual acceptance criteria
 
-None. All 33 AC are testable through automated tests.
+None. All 33 AC are testable through automated tests. No visual or UX-only criteria identified in the spec.
 
 ## 4. Failures (if any)
 
-| # | What failed | Relevant output | Probable responsibility |
-|---|---|---|---|
-| 1–54 | All scaffold function tests fail as expected | `Error: not implemented` from stubs in `src/domain/` and `src/ui/` | test-author (expected red mode failures); implementer (to resolve in next phase) |
-| 55 | Two tests expect code not yet implemented (replaceChildren, placeholder check) | main.ts placeholder still present, replaceChildren not added | implementer (to resolve in next phase) |
-
-### Failure classification
-
-All 54 failures are **RED LEGIT** (Art. B5.2):
-- Thrown by scaffold stubs implementing `not implemented` (Art. B5.6)
-- No syntax errors, import errors, or fixture problems ✓
-- All imports reference modules in the plan ✓
-
-The 1 passing test (T-028) is **acceptable** as a pre-existing invariant guard, verifying that NFR-001 (privacy) is satisfied through code structure (Art. P3.1).
+None. All checks pass.
 
 ## Conclusion
 
-**Mode:** red · **Scope:** app · **Result:** PASS
+**Mode:** full · **Scope:** app · **Result:** PASS
 
-All 55 new tests execute correctly:
-- 54 fail legitimately due to missing scaffold implementations (expected in red mode)
-- 1 passes as an acceptable guard test verifying a pre-existing constraint
-- All scaffolds follow the constitution (Art. B5.6, P1.6)
-- Complete traceability: 33 AC → tests with SDD: markers
-- No problematic test patterns (skip, xfail, .only)
-- Ready for implementation phase
+Complete verification successful:
+- All 4 configured commands execute cleanly (test, lint, typecheck, build)
+- All 56 tests pass (55 new + 1 guard)
+- Complete traceability: 33 AC → tests with SDD markers → all passing
+- Test snapshot unchanged from approved tests stage
+- All 31 tasks complete (`[x]` marked)
+- No problematic test patterns
+- Ready for review phase
