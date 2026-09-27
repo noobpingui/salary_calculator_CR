@@ -1,0 +1,81 @@
+{
+  "schema_version": 1,
+  "feature": "002-ui-redesign",
+  "title": "Redesign the calculator UI as a minimalist, more dynamic black, grey and white interface",
+  "type": "feature",
+  "scope": [
+    "app"
+  ],
+  "branch": "feat/002-ui-redesign",
+  "base_branch": "main",
+  "created_at": "2026-09-27T21:29:19.470Z",
+  "stage": "plan",
+  "status": "in_progress",
+  "approvals": {
+    "spec": {
+      "at": "2026-09-27T21:59:34.332Z",
+      "note": "approved, commit it"
+    },
+    "plan": null,
+    "tasks": null,
+    "tests": null,
+    "implement": null,
+    "verify": null,
+    "review": null,
+    "docs": null,
+    "close": null
+  },
+  "commits": {},
+  "iterations": {
+    "tests": 0,
+    "implement": 0,
+    "review": 0
+  },
+  "max_iterations": 3,
+  "red_check": {
+    "result": null,
+    "at": null
+  },
+  "verify": {
+    "result": null,
+    "at": null
+  },
+  "review": {
+    "verdict": null,
+    "at": null
+  },
+  "tests_snapshot": null,
+  "bypass": false,
+  "history": [
+    {
+      "at": "2026-09-27T21:29:19.470Z",
+      "stage": "spec",
+      "event": "created",
+      "note": "rama feat/002-ui-redesign desde main"
+    },
+    {
+      "at": "2026-09-27T21:29:23.532Z",
+      "stage": "spec",
+      "event": "started",
+      "note": "Delegate spec to spec-writer"
+    },
+    {
+      "at": "2026-09-27T21:32:00.057Z",
+      "stage": "spec",
+      "event": "needs_input",
+      "note": "Q1-Q12: dynamic behavior, live validation, submit, fonts, dark mode, hint, net emphasis, errors, DOM tests, input formatting, copy, motion"
+    },
+    {
+      "at": "2026-09-27T21:56:06.896Z",
+      "stage": "spec",
+      "event": "done",
+      "note": "9 REQ + 3 NFR, 37 AC; Q1-Q12 resolved (accept all)"
+    },
+    {
+      "at": "2026-09-27T21:59:34.332Z",
+      "stage": "spec",
+      "event": "approved",
+      "note": "approved, commit it"
+    }
+  ]
+}
