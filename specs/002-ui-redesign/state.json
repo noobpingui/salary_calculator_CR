@@ -9,7 +9,7 @@
   "branch": "feat/002-ui-redesign",
   "base_branch": "main",
   "created_at": "2026-09-27T21:29:19.470Z",
-  "stage": "tasks",
+  "stage": "tests",
   "status": "in_progress",
   "approvals": {
     "spec": {
@@ -20,7 +20,10 @@
       "at": "2026-09-27T23:12:49.238Z",
       "note": "1. Approved. 2. Yes"
     },
-    "tasks": null,
+    "tasks": {
+      "at": "2026-09-27T23:19:36.851Z",
+      "note": "approved, commit it, and yes to option a"
+    },
     "tests": null,
     "implement": null,
     "verify": null,
@@ -29,7 +32,8 @@
     "close": null
   },
   "commits": {
-    "spec": "ce9cd20"
+    "spec": "ce9cd20",
+    "plan": "7f1c765"
   },
   "iterations": {
     "tests": 0,
@@ -111,6 +115,36 @@
       "stage": "plan",
       "event": "approved",
       "note": "1. Approved. 2. Yes"
+    },
+    {
+      "at": "2026-09-27T23:12:49.447Z",
+      "stage": "tasks",
+      "event": "commit",
+      "note": "plan: 7f1c765"
+    },
+    {
+      "at": "2026-09-27T23:12:49.649Z",
+      "stage": "tasks",
+      "event": "started",
+      "note": "Delegate tasks to task-breaker"
+    },
+    {
+      "at": "2026-09-27T23:17:51.975Z",
+      "stage": "tasks",
+      "event": "done",
+      "note": "58 tasks (1 config, 1 scaffold, 43 test, 13 impl); all 36 AC covered"
+    },
+    {
+      "at": "2026-09-27T23:19:36.851Z",
+      "stage": "tasks",
+      "event": "approved",
+      "note": "approved, commit it, and yes to option a"
+    },
+    {
+      "at": "2026-09-27T23:19:36.938Z",
+      "stage": "tests",
+      "event": "note",
+      "note": "Docs stage: doc-keeper must set ADR-0001/0002/0003 status to Accepted (user chose option a; planner blocked by role guard)"
     }
   ]
 }
