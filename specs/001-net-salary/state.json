@@ -1,0 +1,346 @@
+{
+  "schema_version": 1,
+  "feature": "001-net-salary",
+  "title": "Compute net monthly salary from gross salary with CCSS and income tax deductions",
+  "type": "feature",
+  "scope": [
+    "app"
+  ],
+  "branch": "feat/001-net-salary",
+  "base_branch": "main",
+  "created_at": "2026-09-27T10:46:24.489Z",
+  "stage": "done",
+  "status": "done",
+  "approvals": {
+    "spec": {
+      "at": "2026-09-27T11:01:05.544Z",
+      "note": "approved, commit it"
+    },
+    "plan": {
+      "at": "2026-09-27T11:20:33.400Z",
+      "note": "1. Approved. 2.Yes"
+    },
+    "tasks": {
+      "at": "2026-09-27T17:27:48.565Z",
+      "note": "approved, commit it"
+    },
+    "tests": {
+      "at": "2026-09-27T18:05:15.419Z",
+      "note": "approved, commit it"
+    },
+    "implement": {
+      "at": "2026-09-27T18:27:14.786Z",
+      "note": "approved, commit it"
+    },
+    "verify": {
+      "at": "2026-09-27T18:50:47.084Z",
+      "note": "Approvev"
+    },
+    "review": {
+      "at": "2026-09-27T18:59:16.058Z",
+      "note": "approved"
+    },
+    "docs": {
+      "at": "2026-09-27T19:03:51.653Z",
+      "note": "approved"
+    },
+    "close": {
+      "at": "2026-09-27T19:10:29.620Z",
+      "note": "approved (a)"
+    }
+  },
+  "commits": {
+    "spec": "c89f3b8",
+    "plan": "a6580ec",
+    "tasks": "1121425",
+    "tests": "4ac2b39",
+    "implement": "3320748",
+    "verify": "13486b7",
+    "review": "77f8afe",
+    "docs": "c6ce1a7"
+  },
+  "iterations": {
+    "tests": 0,
+    "implement": 0,
+    "review": 0
+  },
+  "max_iterations": 3,
+  "red_check": {
+    "result": "PASS",
+    "at": "2026-09-27T17:56:36.490Z"
+  },
+  "verify": {
+    "result": "PASS",
+    "at": "2026-09-27T18:28:52.190Z"
+  },
+  "review": {
+    "verdict": "APPROVED",
+    "at": "2026-09-27T18:53:13.515Z"
+  },
+  "tests_snapshot": {
+    "at": "2026-09-27T18:05:15.302Z",
+    "reason": "tests approved",
+    "sha256": {
+      "tests/unit/gross-salary.test.ts": "59a1c4eb205f33a83b05aaa8c0f9d90cf32238f63674dd2a772e0736581cad70",
+      "tests/unit/money.test.ts": "b5918273f26d986ae98f1f98ee71807eb195a073dc3ff00f471b3ef0be6f2efd",
+      "tests/unit/net-salary-view.test.ts": "23fd95328a0c046ea59535185b46762247084d0e55fde83e80bd7d2f8a03b6c7",
+      "tests/unit/net-salary.test.ts": "d8eb9a0b1f938e50a6ffbb0e9d2e9c334f0394336913ab757dd63c5ad9ca9ee0",
+      "tests/unit/privacy.test.ts": "899908f35a6d396e58086b0fbb7dcc9fa9dc4f90b43cd313add3945f282a3569"
+    }
+  },
+  "bypass": false,
+  "history": [
+    {
+      "at": "2026-09-27T10:46:24.489Z",
+      "stage": "spec",
+      "event": "created",
+      "note": "rama feat/001-net-salary desde main"
+    },
+    {
+      "at": "2026-09-27T10:48:47.858Z",
+      "stage": "spec",
+      "event": "started",
+      "note": "Delegate spec to spec-writer"
+    },
+    {
+      "at": "2026-09-27T10:50:42.598Z",
+      "stage": "spec",
+      "event": "needs_input",
+      "note": "Q1-Q9: legal year/brackets, CCSS/LPT rates, LPT line, tax credits, min base, limits, decimals, tax breakdown, rounding"
+    },
+    {
+      "at": "2026-09-27T10:58:30.445Z",
+      "stage": "spec",
+      "event": "done",
+      "note": "Spec with 6 REQ + 2 NFR, 33 AC; Q1-Q9 resolved (accept all)"
+    },
+    {
+      "at": "2026-09-27T11:01:05.544Z",
+      "stage": "spec",
+      "event": "approved",
+      "note": "approved, commit it"
+    },
+    {
+      "at": "2026-09-27T11:01:12.398Z",
+      "stage": "plan",
+      "event": "commit",
+      "note": "spec: c89f3b8"
+    },
+    {
+      "at": "2026-09-27T11:01:12.542Z",
+      "stage": "plan",
+      "event": "started",
+      "note": "Delegate plan to planner"
+    },
+    {
+      "at": "2026-09-27T11:04:53.698Z",
+      "stage": "plan",
+      "event": "done",
+      "note": "Plan: bigint-cents domain + pure presenter; ADR-0001 proposed"
+    },
+    {
+      "at": "2026-09-27T11:20:33.400Z",
+      "stage": "plan",
+      "event": "approved",
+      "note": "1. Approved. 2.Yes"
+    },
+    {
+      "at": "2026-09-27T11:20:41.666Z",
+      "stage": "tasks",
+      "event": "commit",
+      "note": "plan: a6580ec"
+    },
+    {
+      "at": "2026-09-27T11:20:41.816Z",
+      "stage": "tasks",
+      "event": "started",
+      "note": "Delegate tasks to task-breaker"
+    },
+    {
+      "at": "2026-09-27T11:23:41.622Z",
+      "stage": "tasks",
+      "event": "done",
+      "note": "31 tasks (4 scaffold, 2 config, 19 test, 6 impl); all 33 AC covered"
+    },
+    {
+      "at": "2026-09-27T17:27:48.565Z",
+      "stage": "tasks",
+      "event": "approved",
+      "note": "approved, commit it"
+    },
+    {
+      "at": "2026-09-27T17:27:48.767Z",
+      "stage": "tests",
+      "event": "commit",
+      "note": "tasks: 1121425"
+    },
+    {
+      "at": "2026-09-27T17:27:54.910Z",
+      "stage": "tests",
+      "event": "started",
+      "note": "Scaffold stubs, then delegate tests to test-author"
+    },
+    {
+      "at": "2026-09-27T17:56:36.490Z",
+      "stage": "tests",
+      "event": "result",
+      "note": "red PASS: 54 tests fail red-legit with 'not implemented' from scaffolds; 1 pre-existing invariant test (privacy guard) passes; all 33 AC covered; ready for implementation"
+    },
+    {
+      "at": "2026-09-27T17:58:23.032Z",
+      "stage": "tests",
+      "event": "done",
+      "note": "55 tests (T-010..T-028) + 6 scaffolds; red check PASS: 54 not-implemented, 1 privacy invariant passes"
+    },
+    {
+      "at": "2026-09-27T18:05:15.302Z",
+      "stage": "tests",
+      "event": "snapshot",
+      "note": "5 archivo(s) de test: tests approved"
+    },
+    {
+      "at": "2026-09-27T18:05:15.419Z",
+      "stage": "tests",
+      "event": "approved",
+      "note": "approved, commit it"
+    },
+    {
+      "at": "2026-09-27T18:05:15.645Z",
+      "stage": "implement",
+      "event": "commit",
+      "note": "tests: 4ac2b39"
+    },
+    {
+      "at": "2026-09-27T18:09:43.700Z",
+      "stage": "implement",
+      "event": "done",
+      "note": "T-030..T-035 done; 56/56 tests pass; lint/typecheck/build clean; tests snapshot identical"
+    },
+    {
+      "at": "2026-09-27T18:27:14.786Z",
+      "stage": "implement",
+      "event": "approved",
+      "note": "approved, commit it"
+    },
+    {
+      "at": "2026-09-27T18:27:14.975Z",
+      "stage": "verify",
+      "event": "commit",
+      "note": "implement: 3320748"
+    },
+    {
+      "at": "2026-09-27T18:27:15.174Z",
+      "stage": "verify",
+      "event": "started",
+      "note": "Delegate full verification to verifier"
+    },
+    {
+      "at": "2026-09-27T18:28:52.190Z",
+      "stage": "verify",
+      "event": "result",
+      "note": "verify PASS: Full verification: all commands pass (56 tests, lint, typecheck, build), traceability complete, test snapshot unchanged"
+    },
+    {
+      "at": "2026-09-27T18:29:13.640Z",
+      "stage": "verify",
+      "event": "done",
+      "note": "Full verify PASS: 56/56 tests, lint/typecheck/build clean, snapshot identical, traceability complete"
+    },
+    {
+      "at": "2026-09-27T18:50:47.084Z",
+      "stage": "verify",
+      "event": "approved",
+      "note": "Approvev"
+    },
+    {
+      "at": "2026-09-27T18:50:47.279Z",
+      "stage": "review",
+      "event": "commit",
+      "note": "verify: 13486b7"
+    },
+    {
+      "at": "2026-09-27T18:50:47.472Z",
+      "stage": "review",
+      "event": "started",
+      "note": "Delegate review to reviewer"
+    },
+    {
+      "at": "2026-09-27T18:53:13.515Z",
+      "stage": "review",
+      "event": "verdict",
+      "note": "APPROVED"
+    },
+    {
+      "at": "2026-09-27T18:53:13.605Z",
+      "stage": "review",
+      "event": "done",
+      "note": "APPROVED: 0 blocker, 0 major, 1 minor (F1 test asserts via constant), 4 nits"
+    },
+    {
+      "at": "2026-09-27T18:59:16.058Z",
+      "stage": "review",
+      "event": "approved",
+      "note": "approved"
+    },
+    {
+      "at": "2026-09-27T18:59:19.991Z",
+      "stage": "docs",
+      "event": "note",
+      "note": "Review findings F1-F5 deferred as follow-ups (see review.md)"
+    },
+    {
+      "at": "2026-09-27T18:59:20.172Z",
+      "stage": "docs",
+      "event": "commit",
+      "note": "review: 77f8afe"
+    },
+    {
+      "at": "2026-09-27T18:59:20.364Z",
+      "stage": "docs",
+      "event": "started",
+      "note": "Delegate docs to doc-keeper"
+    },
+    {
+      "at": "2026-09-27T19:01:23.661Z",
+      "stage": "docs",
+      "event": "done",
+      "note": "README + CLAUDE.md Proyecto updated; docs-report with F1-F5 follow-ups"
+    },
+    {
+      "at": "2026-09-27T19:03:51.653Z",
+      "stage": "docs",
+      "event": "approved",
+      "note": "approved"
+    },
+    {
+      "at": "2026-09-27T19:03:51.841Z",
+      "stage": "close",
+      "event": "commit",
+      "note": "docs: c6ce1a7"
+    },
+    {
+      "at": "2026-09-27T19:04:09.610Z",
+      "stage": "close",
+      "event": "started",
+      "note": "Definition-of-done checklist"
+    },
+    {
+      "at": "2026-09-27T19:04:18.070Z",
+      "stage": "close",
+      "event": "done",
+      "note": "DoD all green"
+    },
+    {
+      "at": "2026-09-27T19:10:29.620Z",
+      "stage": "close",
+      "event": "approved",
+      "note": "approved (a)"
+    },
+    {
+      "at": "2026-09-27T19:10:29.620Z",
+      "stage": "done",
+      "event": "done",
+      "note": "feature cerrada"
+    }
+  ]
+}

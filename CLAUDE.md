@@ -6,9 +6,12 @@ Costa Rica from their **gross salary**, applying the mandatory deductions (CCSS 
 salary income tax).
 
 ### Areas
-- **UI** (`src/main.ts`, `index.html`, `src/style.css`): a form where the user enters the gross salary and sees
-  the result. User-facing text is in Spanish (`es-CR`).
-- **Domain** (`src/domain/`, planned): pure calculation functions (deductions, tax brackets, net salary).
+- **UI** (`src/main.ts`, `src/ui/`, `index.html`, `src/style.css`): `src/main.ts` reads the form input and renders
+  the result; `src/ui/net-salary-view.ts` is a pure, DOM-free presenter that maps input to Spanish error messages or
+  the formatted breakdown. User-facing text is in Spanish (`es-CR`).
+- **Domain** (`src/domain/`): pure calculation functions — `money.ts` (round-half-up cents), `legal-parameters.ts`
+  (yearly rates and tax brackets), `gross-salary.ts` (parsing/validation) and `net-salary.ts` (deductions and net
+  salary).
 - **Shared** (`src/shared/`): cross-cutting helpers, e.g. `formatCRC` for colón formatting.
 
 ### Architecture

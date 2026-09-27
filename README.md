@@ -2,7 +2,9 @@
 
 Aplicación web que calcula el **salario neto** de una persona trabajadora en Costa Rica a partir de su **salario bruto**, aplicando las rebajas de ley correspondientes (cargas sociales de la CCSS / LPT e impuesto sobre la renta).
 
-> **Estado:** walking skeleton. El flujo de extremo a extremo (entrada del salario bruto → resultado) existe, pero el cálculo de rebajas todavía no está implementado.
+> **Estado:** la calculadora está implementada. A partir del salario bruto ingresado, calcula las rebajas obligatorias
+> (CCSS — SEM e IVM, LPT/Banco Popular e impuesto sobre la renta con los tramos progresivos del año fiscal vigente) y
+> muestra el detalle y el salario neto resultante, en colones.
 
 ## Stack
 
@@ -47,8 +49,10 @@ npm run dev      # abre la app en http://localhost:5173
 .
 ├── index.html            # Punto de entrada HTML
 ├── src/
-│   ├── main.ts           # Arranque de la UI (formulario de salario bruto)
+│   ├── main.ts           # Arranque de la UI: lee el formulario y renderiza el resultado
 │   ├── style.css
+│   ├── domain/           # Funciones de cálculo puras (parseo, rebajas, tramos de renta, salario neto)
+│   ├── ui/               # Presentador puro (mensajes de error y desglose, sin acceso al DOM)
 │   └── shared/           # Utilidades compartidas (p. ej. formato de colones)
 ├── tests/
 │   └── unit/             # Tests unitarios (*.test.ts)
