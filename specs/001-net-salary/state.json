@@ -9,8 +9,8 @@
   "branch": "feat/001-net-salary",
   "base_branch": "main",
   "created_at": "2026-09-27T10:46:24.489Z",
-  "stage": "close",
-  "status": "in_progress",
+  "stage": "done",
+  "status": "done",
   "approvals": {
     "spec": {
       "at": "2026-09-27T11:01:05.544Z",
@@ -44,7 +44,10 @@
       "at": "2026-09-27T19:03:51.653Z",
       "note": "approved"
     },
-    "close": null
+    "close": {
+      "at": "2026-09-27T19:10:29.620Z",
+      "note": "approved (a)"
+    }
   },
   "commits": {
     "spec": "c89f3b8",
@@ -53,7 +56,8 @@
     "tests": "4ac2b39",
     "implement": "3320748",
     "verify": "13486b7",
-    "review": "77f8afe"
+    "review": "77f8afe",
+    "docs": "c6ce1a7"
   },
   "iterations": {
     "tests": 0,
@@ -307,6 +311,36 @@
       "stage": "docs",
       "event": "approved",
       "note": "approved"
+    },
+    {
+      "at": "2026-09-27T19:03:51.841Z",
+      "stage": "close",
+      "event": "commit",
+      "note": "docs: c6ce1a7"
+    },
+    {
+      "at": "2026-09-27T19:04:09.610Z",
+      "stage": "close",
+      "event": "started",
+      "note": "Definition-of-done checklist"
+    },
+    {
+      "at": "2026-09-27T19:04:18.070Z",
+      "stage": "close",
+      "event": "done",
+      "note": "DoD all green"
+    },
+    {
+      "at": "2026-09-27T19:10:29.620Z",
+      "stage": "close",
+      "event": "approved",
+      "note": "approved (a)"
+    },
+    {
+      "at": "2026-09-27T19:10:29.620Z",
+      "stage": "done",
+      "event": "done",
+      "note": "feature cerrada"
     }
   ]
 }
