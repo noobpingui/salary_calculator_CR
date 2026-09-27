@@ -15,7 +15,39 @@ form {
   gap: 0.5rem;
 }
 
-output {
+#result {
   display: block;
   margin-top: 1rem;
+}
+
+.breakdown {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.25rem 1rem;
+  margin: 0;
+}
+
+.breakdown dt {
+  grid-column: 1;
+}
+
+.breakdown dd {
+  grid-column: 2;
+  margin: 0;
+  text-align: right;
+}
+
+.breakdown dt:last-of-type,
+.breakdown dd:last-of-type {
+  font-weight: bold;
+}
+
+.error {
+  color: #b00020;
+}
+
+.legal-year {
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+  color: gray;
 }

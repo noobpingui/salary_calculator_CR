@@ -1,4 +1,5 @@
 import type { Cents } from './money';
+import { divideRoundHalfUp } from './money';
 import type { IncomeTaxBracket, LegalParameters } from './legal-parameters';
 
 export interface NetSalaryResult {
@@ -13,18 +14,47 @@ export interface NetSalaryResult {
 }
 
 /** grossCents × basisPoints / 10 000, rounded half up to the cent. */
-export function calculateContribution(_grossCents: Cents, _basisPoints: number): Cents {
-  throw new Error('not implemented');
+export function calculateContribution(grossCents: Cents, basisPoints: number): Cents {
+  return divideRoundHalfUp(grossCents * BigInt(basisPoints), 10_000n);
 }
 
 /** Marginal progressive tax on grossCents; the total is rounded half up to the cent once. */
 export function calculateIncomeTax(
-  _grossCents: Cents,
-  _brackets: readonly IncomeTaxBracket[],
+  grossCents: Cents,
+  brackets: readonly IncomeTaxBracket[],
 ): Cents {
-  throw new Error('not implemented');
+  let lower = 0n;
+  let acc = 0n;
+
+  for (const bracket of brackets) {
+    const upper = bracket.upperLimitCents ?? grossCents;
+    if (grossCents > lower) {
+      const taxableInBracket = (grossCents < upper ? grossCents : upper) - lower;
+      acc += taxableInBracket * BigInt(bracket.rateBasisPoints);
+    }
+    if (bracket.upperLimitCents === null) break;
+    lower = upper;
+  }
+
+  return divideRoundHalfUp(acc, 10_000n);
 }
 
-export function calculateNetSalary(_grossCents: Cents, _params: LegalParameters): NetSalaryResult {
-  throw new Error('not implemented');
+export function calculateNetSalary(grossCents: Cents, params: LegalParameters): NetSalaryResult {
+  const semCents = calculateContribution(grossCents, params.sem.basisPoints);
+  const ivmCents = calculateContribution(grossCents, params.ivm.basisPoints);
+  const lptCents = calculateContribution(grossCents, params.lpt.basisPoints);
+  const incomeTaxCents = calculateIncomeTax(grossCents, params.incomeTax.brackets);
+  const totalDeductionsCents = semCents + ivmCents + lptCents + incomeTaxCents;
+  const netCents = grossCents - totalDeductionsCents;
+
+  return {
+    legalYear: params.year,
+    grossCents,
+    semCents,
+    ivmCents,
+    lptCents,
+    incomeTaxCents,
+    totalDeductionsCents,
+    netCents,
+  };
 }

@@ -2,11 +2,11 @@
 export type Cents = bigint;
 
 /** Divides a non-negative numerator by a positive divisor, rounding half up (away from zero). */
-export function divideRoundHalfUp(_numerator: bigint, _divisor: bigint): bigint {
-  throw new Error('not implemented');
+export function divideRoundHalfUp(numerator: bigint, divisor: bigint): bigint {
+  return (2n * numerator + divisor) / (2n * divisor);
 }
 
 /** Converts cents to a colón amount as `number`, only for display (formatCRC). */
-export function centsToNumber(_cents: Cents): number {
-  throw new Error('not implemented');
+export function centsToNumber(cents: Cents): number {
+  return Number(cents) / 100;
 }

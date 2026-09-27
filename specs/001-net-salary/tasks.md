@@ -36,12 +36,12 @@
 - [x] T-028 [NFR-001, AC-006.4, AC-001.6] (test) Every file loaded via `import.meta.glob('../../src/**/*.ts', { query: '?raw', import: 'default', eager: true })` contains none of `fetch(`, `XMLHttpRequest`, `WebSocket`, `sendBeacon`, `localStorage`, `sessionStorage`, `indexedDB`, `document.cookie`; `src/main.ts` contains no "(cálculo de rebajas pendiente)" and uses `replaceChildren` — `tests/unit/privacy.test.ts`
 
 ## Phase B — Implementation (implementer)
-- [ ] T-030 [REQ-005] (impl) Implement `divideRoundHalfUp` and `centsToNumber`, replacing the "not implemented" bodies — `src/domain/money.ts`
-- [ ] T-031 [REQ-001] (impl) Implement `parseGrossSalary`: trim, finite-decimal validation, sign check and exact parsing into cents — `src/domain/gross-salary.ts`
-- [ ] T-032 [REQ-002, REQ-003, REQ-004, REQ-005] (impl) Implement `calculateContribution`, `calculateIncomeTax` and `calculateNetSalary` (marginal brackets, rounded totals derived from rounded amounts) — `src/domain/net-salary.ts`
-- [ ] T-033 [REQ-001, REQ-006] (impl) Implement `presentNetSalary`: map `parseGrossSalary` errors to `GROSS_SALARY_ERROR_MESSAGES`, and a valid result to the 7 ordered breakdown lines plus the legal-year note — `src/ui/net-salary-view.ts`
-- [ ] T-034 [REQ-001, REQ-006, NFR-001] (impl) Wire `src/main.ts` to `presentNetSalary`: switch the input to `type="text"`/`inputmode="decimal"`, replace `<output id="result">` with `<section id="result" aria-live="polite">`, render the error/result view with `replaceChildren`, and remove the "(cálculo de rebajas pendiente)" placeholder — `src/main.ts`
-- [ ] T-035 [REQ-006] (impl) Update `#result` styles for the `.breakdown` two-column list, `.error` message and `.legal-year` note, with the `Salario neto` row in bold — `src/style.css`
+- [x] T-030 [REQ-005] (impl) Implement `divideRoundHalfUp` and `centsToNumber`, replacing the "not implemented" bodies — `src/domain/money.ts`
+- [x] T-031 [REQ-001] (impl) Implement `parseGrossSalary`: trim, finite-decimal validation, sign check and exact parsing into cents — `src/domain/gross-salary.ts`
+- [x] T-032 [REQ-002, REQ-003, REQ-004, REQ-005] (impl) Implement `calculateContribution`, `calculateIncomeTax` and `calculateNetSalary` (marginal brackets, rounded totals derived from rounded amounts) — `src/domain/net-salary.ts`
+- [x] T-033 [REQ-001, REQ-006] (impl) Implement `presentNetSalary`: map `parseGrossSalary` errors to `GROSS_SALARY_ERROR_MESSAGES`, and a valid result to the 7 ordered breakdown lines plus the legal-year note — `src/ui/net-salary-view.ts`
+- [x] T-034 [REQ-001, REQ-006, NFR-001] (impl) Wire `src/main.ts` to `presentNetSalary`: switch the input to `type="text"`/`inputmode="decimal"`, replace `<output id="result">` with `<section id="result" aria-live="polite">`, render the error/result view with `replaceChildren`, and remove the "(cálculo de rebajas pendiente)" placeholder — `src/main.ts`
+- [x] T-035 [REQ-006] (impl) Update `#result` styles for the `.breakdown` two-column list, `.error` message and `.legal-year` note, with the `Salario neto` row in bold — `src/style.css`
 
 ## Coverage matrix
 | REQ / NFR | AC | Test tasks | Impl tasks |

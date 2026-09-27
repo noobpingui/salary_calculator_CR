@@ -9,7 +9,7 @@
   "branch": "feat/001-net-salary",
   "base_branch": "main",
   "created_at": "2026-09-27T10:46:24.489Z",
-  "stage": "implement",
+  "stage": "verify",
   "status": "in_progress",
   "approvals": {
     "spec": {
@@ -28,7 +28,10 @@
       "at": "2026-09-27T18:05:15.419Z",
       "note": "approved, commit it"
     },
-    "implement": null,
+    "implement": {
+      "at": "2026-09-27T18:27:14.786Z",
+      "note": "approved, commit it"
+    },
     "verify": null,
     "review": null,
     "docs": null,
@@ -37,7 +40,8 @@
   "commits": {
     "spec": "c89f3b8",
     "plan": "a6580ec",
-    "tasks": "1121425"
+    "tasks": "1121425",
+    "tests": "4ac2b39"
   },
   "iterations": {
     "tests": 0,
@@ -181,6 +185,24 @@
     {
       "at": "2026-09-27T18:05:15.419Z",
       "stage": "tests",
+      "event": "approved",
+      "note": "approved, commit it"
+    },
+    {
+      "at": "2026-09-27T18:05:15.645Z",
+      "stage": "implement",
+      "event": "commit",
+      "note": "tests: 4ac2b39"
+    },
+    {
+      "at": "2026-09-27T18:09:43.700Z",
+      "stage": "implement",
+      "event": "done",
+      "note": "T-030..T-035 done; 56/56 tests pass; lint/typecheck/build clean; tests snapshot identical"
+    },
+    {
+      "at": "2026-09-27T18:27:14.786Z",
+      "stage": "implement",
       "event": "approved",
       "note": "approved, commit it"
     }
