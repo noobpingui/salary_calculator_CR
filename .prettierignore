@@ -2,3 +2,10 @@ dist
 coverage
 node_modules
 package-lock.json
+
+# sdd-beto workflow files
+.sdd
+.claude
+CLAUDE.md
+specs
+docs/decisions
