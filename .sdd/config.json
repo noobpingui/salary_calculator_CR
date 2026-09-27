@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "language": "en",
+  "base_branch": "main",
+  "branches": {
+    "feature": "feat",
+    "fix": "fix",
+    "refactor": "refactor"
+  },
+  "commits": {
+    "language": "en",
+    "style": "imperative, no conventional prefixes"
+  },
+  "max_iterations": 3,
+  "paths": {
+    "specs": "specs",
+    "adr": "docs/decisions",
+    "docs": [
+      "README.md",
+      "docs/**"
+    ],
+    "env_examples": [
+      "**/.env.example"
+    ]
+  },
+  "scopes": {
+    "app": {
+      "root": ".",
+      "prod": [
+        "src/**",
+        "index.html"
+      ],
+      "tests": [
+        "tests/**"
+      ],
+      "commands": {
+        "test": "npm test",
+        "test_files": "npx vitest run {files}",
+        "test_check": "npx vitest list {files}",
+        "lint": "npm run lint",
+        "lint_ratchet": {
+          "format": "eslint",
+          "cmd": "npx eslint --format json --stdin --stdin-filename {file}"
+        },
+        "typecheck": "npm run typecheck",
+        "build": "npm run build"
+      },
+      "env_hint": "Run `npm install` if dependencies (node_modules) are missing."
+    }
+  },
+  "models": {}
+}
