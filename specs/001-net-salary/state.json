@@ -9,7 +9,7 @@
   "branch": "feat/001-net-salary",
   "base_branch": "main",
   "created_at": "2026-09-27T10:46:24.489Z",
-  "stage": "review",
+  "stage": "docs",
   "status": "in_progress",
   "approvals": {
     "spec": {
@@ -36,7 +36,10 @@
       "at": "2026-09-27T18:50:47.084Z",
       "note": "Approvev"
     },
-    "review": null,
+    "review": {
+      "at": "2026-09-27T18:59:16.058Z",
+      "note": "approved"
+    },
     "docs": null,
     "close": null
   },
@@ -45,7 +48,8 @@
     "plan": "a6580ec",
     "tasks": "1121425",
     "tests": "4ac2b39",
-    "implement": "3320748"
+    "implement": "3320748",
+    "verify": "13486b7"
   },
   "iterations": {
     "tests": 0,
@@ -62,8 +66,8 @@
     "at": "2026-09-27T18:28:52.190Z"
   },
   "review": {
-    "verdict": null,
-    "at": null
+    "verdict": "APPROVED",
+    "at": "2026-09-27T18:53:13.515Z"
   },
   "tests_snapshot": {
     "at": "2026-09-27T18:05:15.302Z",
@@ -239,6 +243,42 @@
       "stage": "verify",
       "event": "approved",
       "note": "Approvev"
+    },
+    {
+      "at": "2026-09-27T18:50:47.279Z",
+      "stage": "review",
+      "event": "commit",
+      "note": "verify: 13486b7"
+    },
+    {
+      "at": "2026-09-27T18:50:47.472Z",
+      "stage": "review",
+      "event": "started",
+      "note": "Delegate review to reviewer"
+    },
+    {
+      "at": "2026-09-27T18:53:13.515Z",
+      "stage": "review",
+      "event": "verdict",
+      "note": "APPROVED"
+    },
+    {
+      "at": "2026-09-27T18:53:13.605Z",
+      "stage": "review",
+      "event": "done",
+      "note": "APPROVED: 0 blocker, 0 major, 1 minor (F1 test asserts via constant), 4 nits"
+    },
+    {
+      "at": "2026-09-27T18:59:16.058Z",
+      "stage": "review",
+      "event": "approved",
+      "note": "approved"
+    },
+    {
+      "at": "2026-09-27T18:59:19.991Z",
+      "stage": "docs",
+      "event": "note",
+      "note": "Review findings F1-F5 deferred as follow-ups (see review.md)"
     }
   ]
 }
