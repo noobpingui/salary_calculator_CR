@@ -9,33 +9,18 @@
   "branch": "feat/002-ui-redesign",
   "base_branch": "main",
   "created_at": "2026-09-27T21:29:19.470Z",
-  "stage": "review",
+  "stage": "plan",
   "status": "in_progress",
   "approvals": {
     "spec": {
-      "at": "2026-09-27T21:59:34.332Z",
+      "at": "2026-09-28T07:58:17.181Z",
       "note": "approved, commit it"
     },
-    "plan": {
-      "at": "2026-09-27T23:12:49.238Z",
-      "note": "1. Approved. 2. Yes"
-    },
-    "tasks": {
-      "at": "2026-09-27T23:19:36.851Z",
-      "note": "approved, commit it, and yes to option a"
-    },
-    "tests": {
-      "at": "2026-09-28T06:36:24.015Z",
-      "note": "approved, commit it"
-    },
-    "implement": {
-      "at": "2026-09-28T07:03:38.440Z",
-      "note": "approved, keep the workaround, commit it"
-    },
-    "verify": {
-      "at": "2026-09-28T07:17:53.795Z",
-      "note": "approved, commit it"
-    },
+    "plan": null,
+    "tasks": null,
+    "tests": null,
+    "implement": null,
+    "verify": null,
     "review": null,
     "docs": null,
     "close": null
@@ -45,7 +30,8 @@
     "plan": "7f1c765",
     "tasks": "e063869",
     "tests": "b238b0e",
-    "implement": "c10f567"
+    "implement": "c10f567",
+    "verify": "1f7892e"
   },
   "iterations": {
     "tests": 0,
@@ -54,12 +40,12 @@
   },
   "max_iterations": 3,
   "red_check": {
-    "result": "PASS",
-    "at": "2026-09-28T06:16:39.216Z"
+    "result": null,
+    "at": null
   },
   "verify": {
-    "result": "PASS",
-    "at": "2026-09-28T07:06:42.433Z"
+    "result": null,
+    "at": null
   },
   "review": {
     "verdict": null,
@@ -257,6 +243,54 @@
     {
       "at": "2026-09-28T07:17:53.795Z",
       "stage": "verify",
+      "event": "approved",
+      "note": "approved, commit it"
+    },
+    {
+      "at": "2026-09-28T07:17:53.985Z",
+      "stage": "review",
+      "event": "commit",
+      "note": "verify: 1f7892e"
+    },
+    {
+      "at": "2026-09-28T07:17:54.080Z",
+      "stage": "review",
+      "event": "note",
+      "note": "AC-N003.2 320px manual check not yet confirmed by user"
+    },
+    {
+      "at": "2026-09-28T07:17:54.174Z",
+      "stage": "review",
+      "event": "started",
+      "note": "Delegate review to reviewer"
+    },
+    {
+      "at": "2026-09-28T07:22:10.377Z",
+      "stage": "review",
+      "event": "verdict",
+      "note": "CHANGES_REQUESTED"
+    },
+    {
+      "at": "2026-09-28T07:48:17.517Z",
+      "stage": "spec",
+      "event": "rework",
+      "note": "yes reopen the spec stage — user rejected monochrome look after viewing; approved mockup: Colilla night-desk paper (single look, no light/dark variants), colour allowed"
+    },
+    {
+      "at": "2026-09-28T07:54:09.796Z",
+      "stage": "spec",
+      "event": "needs_input",
+      "note": "Spec rev 2 drafted; Q13-Q25 open"
+    },
+    {
+      "at": "2026-09-28T07:56:28.273Z",
+      "stage": "spec",
+      "event": "done",
+      "note": "Spec rev 2 (Colilla night desk): 12 REQ + 3 NFR, 61 AC; Q13-Q25 resolved (accept all defaults)"
+    },
+    {
+      "at": "2026-09-28T07:58:17.181Z",
+      "stage": "spec",
       "event": "approved",
       "note": "approved, commit it"
     }
