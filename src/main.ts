@@ -1,107 +1,140 @@
 import './style.css';
-import type { EvaluationMode, ResultAreaKind, ResultAreaView } from './ui/result-area-view';
-import {
-  breakdownLineRole,
-  isFieldInvalid,
-  presentResultArea,
-  shouldRevealResult,
-} from './ui/result-area-view';
+import type { EvaluationMode, PayslipView, SlipRow } from './ui/result-area-view';
+import { isFieldInvalid, presentResultArea, shouldPrintSlip } from './ui/result-area-view';
 
 const ERROR_ELEMENT_ID = 'gross-salary-error';
 
-/** Normalizes the non-breaking spaces `Intl.NumberFormat` uses as group separators to regular
- * spaces for on-screen text, since `dd` amounts already render with `white-space: nowrap`. */
-function toDisplayText(amount: string): string {
-  return amount.replaceAll(' ', ' ');
-}
-
 const app = document.querySelector<HTMLDivElement>('#app');
 
-/** Builds the single content element for the result area for one `view`, without inserting it. */
-function buildResultContent(view: ResultAreaView): HTMLElement {
-  if (view.kind === 'empty') {
-    const hint = document.createElement('p');
-    hint.className = 'hint';
-    hint.textContent = view.hint;
-    return hint;
-  }
+function span(className: string, text = ''): HTMLSpanElement {
+  const element = document.createElement('span');
+  element.className = className;
+  element.textContent = text;
+  return element;
+}
 
-  if (view.kind === 'error') {
-    const error = document.createElement('p');
-    error.id = ERROR_ELEMENT_ID;
-    error.className = 'error';
-    error.setAttribute('role', 'alert');
-    error.textContent = view.message;
-    return error;
-  }
-
+/** One slip row: label (with its muted rate), a decorative dotted leader, then the amount. */
+function buildSlipRow(row: SlipRow): HTMLDivElement {
   const wrapper = document.createElement('div');
+  wrapper.className = `row row--${row.role}`;
 
-  const list = document.createElement('dl');
-  list.className = 'breakdown';
-  view.lines.forEach((line, index) => {
-    const role = breakdownLineRole(index, view.lines.length);
-    const lineWrapper = document.createElement('div');
-    lineWrapper.className = `line line--${role}`;
+  const term = document.createElement('dt');
+  term.textContent = row.label;
+  if (row.rate !== undefined) {
+    term.append(' ', span('rate', row.rate));
+  }
 
-    const term = document.createElement('dt');
-    term.textContent = line.label;
-    const description = document.createElement('dd');
-    description.textContent = toDisplayText(line.amount);
+  const leader = span('leader');
+  leader.setAttribute('aria-hidden', 'true');
 
-    lineWrapper.append(term, description);
-    list.append(lineWrapper);
-  });
+  const description = document.createElement('dd');
+  description.append(leader, span('amount', row.amount));
 
-  const legalYear = document.createElement('p');
-  legalYear.className = 'legal-year';
-  legalYear.textContent = view.legalYearNote;
-
-  wrapper.append(list, legalYear);
+  wrapper.append(term, description);
   return wrapper;
+}
+
+/** Builds the paper slip for one valid result, without inserting it. */
+function buildSlip(view: PayslipView): HTMLElement {
+  const slip = document.createElement('article');
+  slip.className = 'slip';
+
+  const header = document.createElement('h2');
+  header.className = 'slip__header';
+  header.textContent = view.header;
+
+  const subLine = document.createElement('p');
+  subLine.className = 'slip__sub';
+  subLine.textContent = view.subLine;
+
+  const rows = document.createElement('dl');
+  rows.className = 'slip__rows';
+  rows.append(...view.rows.map(buildSlipRow));
+
+  const footer = document.createElement('p');
+  footer.className = 'slip__foot';
+  footer.textContent = view.footer;
+
+  slip.append(header, subLine, rows, footer);
+  return slip;
 }
 
 if (app) {
   app.innerHTML = `
-    <main>
-      <h1>Calculadora de Salario Neto</h1>
-      <form id="salary-form">
-        <label for="gross-salary">Salario bruto mensual (CRC)</label>
-        <input id="gross-salary" name="gross-salary" type="text" inputmode="decimal" autocomplete="off" />
-        <button type="submit">Calcular</button>
-      </form>
-      <section id="result" aria-live="polite"></section>
+    <main class="desk">
+      <div class="ask">
+        <h1>¿Cuánto le queda de su salario?</h1>
+        <p class="lead">Escriba su salario bruto mensual y le imprimimos la colilla con cada rebaja de ley.</p>
+        <form id="salary-form" novalidate>
+          <label for="gross-salary">Salario bruto mensual</label>
+          <div class="field">
+            <span class="field__prefix" aria-hidden="true">₡</span>
+            <input id="gross-salary" name="gross-salary" type="text" inputmode="decimal" autocomplete="off" />
+          </div>
+          <div class="error-line"></div>
+          <button type="submit" class="calc">Calcular</button>
+        </form>
+      </div>
+      <section id="result" class="slot" aria-live="polite"></section>
     </main>
   `;
 
   const form = app.querySelector<HTMLFormElement>('#salary-form');
   const input = app.querySelector<HTMLInputElement>('#gross-salary');
+  const field = app.querySelector<HTMLElement>('.field');
+  const errorLine = app.querySelector<HTMLElement>('.error-line');
   const result = app.querySelector<HTMLElement>('#result');
 
-  let previousKind: ResultAreaKind | null = null;
+  /** Amounts of the slip on screen, or `null` when no slip is shown. */
+  let shownSlipKey: string | null = null;
 
-  /** Evaluates the current field value in `mode` and renders the matching result-area state. */
+  /** Evaluates the current field value in `mode` and renders the field state and the result column. */
   function evaluate(mode: EvaluationMode): void {
-    if (!input || !result) return;
+    if (!input || !field || !errorLine || !result) return;
 
     const view = presentResultArea(input.value, mode);
-    const content = buildResultContent(view);
 
-    if (shouldRevealResult(previousKind, view.kind)) {
-      content.classList.add('reveal');
+    const invalid = isFieldInvalid(view);
+    field.classList.toggle('field--invalid', invalid);
+    if (view.kind === 'error') {
+      const error = document.createElement('p');
+      error.id = ERROR_ELEMENT_ID;
+      error.className = 'error';
+      error.setAttribute('role', 'alert');
+      error.textContent = view.message;
+      errorLine.replaceChildren(error);
+    } else {
+      errorLine.replaceChildren();
     }
-    previousKind = view.kind;
-
-    result.dataset.state = view.kind;
-    result.replaceChildren(content);
-
-    if (isFieldInvalid(view)) {
+    if (invalid) {
       input.setAttribute('aria-invalid', 'true');
       input.setAttribute('aria-describedby', ERROR_ELEMENT_ID);
     } else {
       input.removeAttribute('aria-invalid');
       input.removeAttribute('aria-describedby');
     }
+
+    result.dataset.state = view.kind;
+
+    if (view.kind !== 'result') {
+      shownSlipKey = null;
+      if (view.kind === 'empty') {
+        const hint = document.createElement('p');
+        hint.className = 'hint';
+        hint.textContent = view.hint;
+        result.replaceChildren(hint);
+      } else {
+        result.replaceChildren();
+      }
+      return;
+    }
+
+    if (!shouldPrintSlip(shownSlipKey, view.amountsKey, mode)) return;
+
+    const slip = buildSlip(view);
+    slip.classList.add('print');
+    result.replaceChildren(slip);
+    shownSlipKey = view.amountsKey;
   }
 
   evaluate('live');

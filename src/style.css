@@ -1,59 +1,72 @@
 /*
- * Design tokens (ADR-0003). Color literals appear only inside this block and inside the
- * `prefers-color-scheme: dark` block below; every other rule references `var(--color-*)`,
- * `currentColor` or `transparent`.
+ * "Colilla, night desk, paper" (spec 002 rev 2, mockup.html panel dk-paper).
+ * A single look: no light/dark variants. Fonts are self-hosted (NFR-001), Latin subset, SIL OFL.
  */
-:root {
-  color-scheme: light dark;
 
-  /* Colors: light scheme (REQ-001, REQ-009). */
-  --color-paper: #ffffff;
-  --color-ink: #000000;
-  --color-graphite: #595959;
-  --color-rule: #767676;
-  --color-haze: #f2f2f2;
-
-  /* Type (system fonts only, NFR-001 AC-N001.3). */
-  --font-sans: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-
-  --text-sm: 0.875rem;
-  --text-base: 1rem;
-  --text-lg: 1.125rem;
-  --text-heading: 1.5rem;
-  --text-field: 1.5rem;
-  --text-net: 2rem;
-
-  --weight-normal: 400;
-  --weight-medium: 500;
-  --weight-heavy: 600;
-  --weight-heading: 700;
-  --weight-net: 750;
-
-  /* Spacing. */
-  --space-1: 0.25rem;
-  --space-2: 0.5rem;
-  --space-3: 0.75rem;
-  --space-4: 1rem;
-  --space-6: 1.5rem;
-  --space-8: 2rem;
-
-  /* Touch target (NFR-003 AC-N003.1). */
-  --size-target: 3rem;
-
-  /* Motion (REQ-008): at most 300ms. */
-  --motion-quick: 120ms;
-  --motion-reveal: 200ms;
-  --ease-out: ease-out;
+@font-face {
+  font-family: 'Figtree';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('./assets/fonts/figtree-latin-400-normal.woff2') format('woff2');
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --color-paper: #000000;
-    --color-ink: #ffffff;
-    --color-graphite: #a6a6a6;
-    --color-rule: #8c8c8c;
-    --color-haze: #1f1f1f;
-  }
+@font-face {
+  font-family: 'Figtree';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('./assets/fonts/figtree-latin-500-normal.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Figtree';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('./assets/fonts/figtree-latin-700-normal.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Courier Prime';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('./assets/fonts/courier-prime-latin-400-normal.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Courier Prime';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('./assets/fonts/courier-prime-latin-700-normal.woff2') format('woff2');
+}
+
+:root {
+  color-scheme: dark;
+
+  --desk: #0b2624;
+  --desk-glow: #133b38;
+  --desk-ink: #dfeee9;
+  --desk-muted: #8fb3aa;
+  --slot: #051312;
+  --paper: #e9e3d3;
+  --paper-hover: #f3eee1;
+  --paper-ink: #1f2826;
+  /* Darker than the original mockup's muted ink, to reach 4.5:1 on the paper (Q23). */
+  --paper-muted: #545f5c;
+  --leader: #a9b0a8;
+  --rule: #8b958f;
+  --focus: #f2c14e;
+  --warn: #ffd08a;
+
+  --font-desk: 'Figtree', system-ui, sans-serif;
+  --font-paper: 'Courier Prime', 'Courier New', monospace;
+
+  font-family: var(--font-desk);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
 }
 
 *,
@@ -64,232 +77,307 @@
 
 body {
   margin: 0;
-  background-color: var(--color-paper);
-  color: var(--color-ink);
-  font-family: var(--font-sans);
+  min-height: 100vh;
+  background-color: var(--desk);
+  background-image: radial-gradient(circle at 20% 10%, var(--desk-glow) 0, transparent 55%);
+  background-attachment: fixed;
+  color: var(--desk-ink);
 }
 
-::selection {
-  background-color: var(--color-ink);
-  color: var(--color-paper);
+/* ---------- Desk layout ---------- */
+
+.desk {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: clamp(24px, 5vw, 56px) clamp(16px, 5vw, 56px);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 420px);
+  gap: 40px;
+  align-items: start;
 }
 
-main {
-  max-width: 60rem;
-  margin-inline: auto;
-  padding-inline: var(--space-4);
-  padding-block: var(--space-6);
+@media (max-width: 760px) {
+  .desk {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
+
+/* ---------- Form column ---------- */
 
 h1 {
-  margin: 0 0 var(--space-6);
-  font-size: var(--text-heading);
-  font-weight: var(--weight-heading);
-  letter-spacing: -0.01em;
+  margin: 0 0 12px;
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  font-weight: 700;
+  line-height: 1.1;
+  text-wrap: balance;
+}
+
+.lead {
+  margin: 0 0 28px;
+  max-width: 42ch;
+  color: var(--desk-muted);
 }
 
 form {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-3);
-  margin-bottom: var(--space-8);
+  display: grid;
+  max-width: 380px;
 }
 
 label {
-  font-size: var(--text-sm);
-  font-weight: var(--weight-medium);
-  color: var(--color-graphite);
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+  color: var(--desk-muted);
 }
 
-input {
+.field {
+  display: flex;
+  align-items: center;
+  min-height: 2.75rem;
+  padding: 4px 16px;
+  border-radius: 10px;
+  background: var(--paper);
+  color: var(--paper-ink);
+  transition: box-shadow 0.15s;
+}
+
+.field__prefix,
+.field input {
+  font-family: var(--font-paper);
+  font-size: 1.6rem;
+}
+
+.field__prefix {
+  color: var(--paper-muted);
+}
+
+.field input {
   width: 100%;
   min-width: 0;
-  min-height: var(--size-target);
-  border: none;
-  border-bottom: 1px solid var(--color-rule);
-  border-radius: 0;
-  background-color: var(--color-paper);
-  color: var(--color-ink);
-  font: inherit;
-  font-size: var(--text-field);
-  font-variant-numeric: tabular-nums lining-nums;
-  padding: var(--space-2) var(--space-1);
-  accent-color: var(--color-ink);
-  caret-color: var(--color-ink);
-  transition:
-    border-color var(--motion-quick) var(--ease-out),
-    background-color var(--motion-quick) var(--ease-out),
-    color var(--motion-quick) var(--ease-out);
+  min-height: 2.75rem;
+  padding: 8px;
+  border: 0;
+  background: transparent;
+  color: var(--paper-ink);
+  caret-color: var(--paper-ink);
+  font-variant-numeric: tabular-nums;
 }
 
-input:hover {
-  background-color: var(--color-haze);
+/* The focus indicator is drawn on the paper field around the input (AC-N002.1). */
+.field input:focus {
+  outline: none;
 }
 
-input[aria-invalid='true'] {
-  border-bottom-width: 3px;
-  border-bottom-color: var(--color-ink);
+.field:focus-within {
+  box-shadow: 0 0 0 3px var(--focus);
 }
 
-button {
-  align-self: flex-start;
-  min-height: var(--size-target);
-  min-width: 8rem;
-  border: 1px solid var(--color-ink);
-  border-radius: 2px;
-  background-color: var(--color-ink);
-  color: var(--color-paper);
-  font: inherit;
-  font-size: var(--text-base);
-  font-weight: var(--weight-heavy);
-  padding-inline: var(--space-4);
-  cursor: pointer;
-  transition:
-    border-color var(--motion-quick) var(--ease-out),
-    background-color var(--motion-quick) var(--ease-out),
-    color var(--motion-quick) var(--ease-out);
+.field--invalid {
+  box-shadow: 0 0 0 2px var(--warn);
 }
 
-button:hover {
-  background-color: var(--color-graphite);
-  border-color: var(--color-graphite);
-  color: var(--color-paper);
+.field--invalid:focus-within {
+  box-shadow: 0 0 0 3px var(--focus);
 }
 
-input:focus-visible,
-button:focus-visible {
-  outline: 2px solid var(--color-ink);
-  outline-offset: 2px;
-}
-
-#result {
-  display: block;
-}
-
-.hint {
-  margin: 0;
-  color: var(--color-graphite);
-  font-size: var(--text-sm);
+/* Keeps its height when empty so the button does not jump when an error appears. */
+.error-line {
+  min-height: 1.45em;
+  margin-top: 10px;
 }
 
 .error {
   margin: 0;
-  color: var(--color-ink);
-  font-weight: var(--weight-heavy);
-  border-inline-start: 3px solid var(--color-ink);
-  padding-inline-start: var(--space-3);
+  color: var(--warn);
+  font-size: 0.95rem;
+  font-weight: 500;
 }
 
-.breakdown {
-  display: block;
-  grid-template-columns: minmax(0, 1fr) auto;
-  margin: 0;
+.calc {
+  justify-self: start;
+  min-height: 48px;
+  margin-top: 10px;
+  padding: 0 26px;
+  border: 0;
+  border-radius: 10px;
+  background: var(--paper);
+  color: var(--paper-ink);
+  font: 700 1rem var(--font-desk);
+  cursor: pointer;
+  transition: background-color 0.15s;
 }
 
-.line {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  column-gap: var(--space-4);
-  align-items: baseline;
-  padding-block: var(--space-1);
+.calc:hover {
+  background: var(--paper-hover);
 }
 
-.breakdown dt {
-  grid-column: 1;
-  overflow-wrap: anywhere;
-  min-width: 0;
-  font-size: var(--text-base);
-  font-weight: var(--weight-normal);
+.calc:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
 }
 
-.breakdown dd {
-  grid-column: 2;
-  margin: 0;
-  text-align: right;
-  white-space: nowrap;
-  font-variant-numeric: tabular-nums lining-nums;
+/* ---------- Slot and slip ---------- */
+
+.slot {
+  position: relative;
+  padding-top: 10px;
 }
 
-.line--deduction dt {
-  border-inline-start: 1px solid var(--color-rule);
-  padding-inline-start: var(--space-3);
+/* The dark bar the slip comes out of (decorative). */
+.slot::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -10px;
+  right: -10px;
+  z-index: 2;
+  height: 12px;
+  border-radius: 6px;
+  background: var(--slot);
+  box-shadow: inset 0 3px 6px rgb(0 0 0 / 45%);
 }
 
-.line--gross dd {
-  font-size: var(--text-lg);
-  font-weight: var(--weight-heavy);
+.hint {
+  margin: 22px 4px 0;
+  color: var(--desk-muted);
 }
 
-.line--deduction dd {
-  font-size: var(--text-base);
-  font-weight: var(--weight-normal);
+.slip {
+  padding: 28px clamp(16px, 5vw, 24px) 36px;
+  background: var(--paper);
+  color: var(--paper-ink);
+  font-family: var(--font-paper);
+  font-size: 0.95rem;
+  line-height: 1.4;
+  /* Torn (zigzag) bottom edge. */
+  -webkit-mask:
+    linear-gradient(#000 0 0) top / 100% calc(100% - 10px) no-repeat,
+    conic-gradient(from 135deg at top, #0000, #000 1deg 89deg, #0000 90deg) bottom / 16px 10px
+      repeat-x;
+  mask:
+    linear-gradient(#000 0 0) top / 100% calc(100% - 10px) no-repeat,
+    conic-gradient(from 135deg at top, #0000, #000 1deg 89deg, #0000 90deg) bottom / 16px 10px
+      repeat-x;
 }
 
-.line--total dd {
-  font-size: var(--text-lg);
-  font-weight: var(--weight-heavy);
+.slip.print {
+  animation: print 0.55s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
-.line--net dd {
-  font-size: var(--text-net);
-  font-weight: var(--weight-net);
-}
-
-.line--total,
-.line--net {
-  border-top: 1px solid var(--color-ink);
-  margin-top: var(--space-2);
-  padding-top: var(--space-2);
-}
-
-.legal-year {
-  margin-top: var(--space-4);
-  color: var(--color-graphite);
-  font-size: var(--text-sm);
-}
-
-.reveal {
-  animation: reveal var(--motion-reveal) var(--ease-out);
-}
-
-@keyframes reveal {
+@keyframes print {
   from {
-    opacity: 0;
-    transform: translateY(4px);
+    transform: translateY(-40%);
+    clip-path: inset(40% 0 0 0);
   }
 
   to {
-    opacity: 1;
     transform: none;
+    clip-path: inset(0 0 0 0);
   }
 }
 
-@media (min-width: 48rem) {
-  main {
-    display: grid;
-    grid-template-columns: minmax(14rem, 18rem) minmax(0, 1fr);
-    align-items: start;
-    gap: var(--space-8);
-  }
+.slip__header {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  text-align: center;
+}
 
-  form {
-    margin-bottom: 0;
-  }
+.slip__sub,
+.slip__foot {
+  color: var(--paper-muted);
+  font-size: 0.82rem;
+  text-align: center;
+}
 
-  h1 {
-    font-size: 2rem;
-  }
+.slip__sub {
+  margin: 4px 0 18px;
+}
 
-  .line--net dd {
-    font-size: 3rem;
-  }
+.slip__foot {
+  margin: 18px 0 0;
+}
+
+.slip__rows {
+  margin: 0;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  column-gap: 6px;
+  padding: 5px 0;
+}
+
+.row dt {
+  flex: 0 1 auto;
+}
+
+.row dd {
+  display: flex;
+  flex: 1 0 auto;
+  align-items: baseline;
+  gap: 6px;
+  margin: 0;
+}
+
+.rate {
+  color: var(--paper-muted);
+}
+
+/* Dotted leader between the label and the amount (decorative). */
+.leader {
+  flex: 1 1 20px;
+  min-width: 12px;
+  border-bottom: 2px dotted var(--leader);
+  transform: translateY(-4px);
+}
+
+.amount {
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Dashed rules: after the gross salary and before the total. */
+.row--gross {
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px dashed var(--rule);
+}
+
+.row--total {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px dashed var(--rule);
+}
+
+/* Double rule above the net salary, the most prominent line. */
+.row--net {
+  justify-content: space-between;
+  row-gap: 4px;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 3px double var(--paper-ink);
+}
+
+.row--net dt {
+  font-weight: 700;
+}
+
+.row--net .leader {
+  border-bottom: 0;
+}
+
+.row--net .amount {
+  font-size: clamp(1.35rem, 6vw, 1.7rem);
+  font-weight: 700;
 }
 
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
   *::after {
-    transition: none !important;
     animation: none !important;
+    transition: none !important;
   }
 }

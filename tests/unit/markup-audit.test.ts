@@ -1,5 +1,4 @@
 import { describe, expect, it } from 'vitest';
-import { isAchromatic } from '../support/css-audit';
 
 const htmlFiles = import.meta.glob('../../index.html', {
   query: '?raw',
@@ -24,64 +23,63 @@ function findMainTs(): string {
 
 const mainTs = findMainTs();
 
-describe('markup — monochrome palette, no inline styles (REQ-001)', () => {
-  // SDD: REQ-001 AC-001.1
-  it('has no style attribute and no .style. usage in index.html or the markup src/main.ts produces', () => {
+describe('markup — single look (REQ-010)', () => {
+  // SDD: REQ-010 AC-010.2
+  it('declares a single theme colour and a single colour scheme, with no scheme-dependent attribute', () => {
+    expect(indexHtml).not.toContain('prefers-color-scheme');
+    const themeColors = [
+      ...indexHtml.matchAll(/<meta\s+name=["']theme-color["']\s+content=["']([^"']+)["']/gi),
+    ].map((match) => match[1]);
+    expect(themeColors).toEqual(['#0b2624']);
+    const schemes = [
+      ...indexHtml.matchAll(/<meta\s+name=["']color-scheme["']\s+content=["']([^"']+)["']/gi),
+    ].map((match) => match[1]);
+    expect(schemes).toEqual(['dark']);
+  });
+
+  // SDD: REQ-010 AC-010.4
+  it('has no look switch and no stored preference', () => {
+    expect(mainTs.match(/<button\b/gi) ?? []).toHaveLength(1);
+    for (const content of [indexHtml, ...Object.values(sourceFiles)]) {
+      expect(content).not.toContain('matchMedia(');
+      expect(content).not.toContain('localStorage');
+      expect(content).not.toContain('sessionStorage');
+      expect(content.toLowerCase()).not.toContain("toggle('theme");
+    }
+  });
+
+  // SDD: REQ-010 AC-010.1
+  it('has no inline styles', () => {
     expect(indexHtml).not.toMatch(/\sstyle\s*=/i);
     expect(mainTs).not.toMatch(/\sstyle\s*=/i);
     expect(mainTs).not.toContain('.style.');
-  });
-
-  // SDD: REQ-001 AC-001.1
-  it('declares only achromatic theme-color meta values', () => {
-    const themeColorMatches = [
-      ...indexHtml.matchAll(/<meta\s+name=["']theme-color["']\s+content=["']([^"']+)["']/gi),
-    ];
-    expect(themeColorMatches.length, 'expected at least one theme-color meta tag').toBeGreaterThan(
-      0,
-    );
-    for (const match of themeColorMatches) {
-      expect(isAchromatic(match[1] ?? '')).toBe(true);
-    }
-  });
-
-  // SDD: REQ-001 AC-001.2
-  it('never uses the previous red error color #b00020', () => {
-    expect(indexHtml).not.toContain('#b00020');
-    for (const [path, content] of Object.entries(sourceFiles)) {
-      expect(content, `${path} should not contain #b00020`).not.toContain('#b00020');
-    }
-  });
-});
-
-describe('markup — no color-scheme toggle or stored preference (REQ-009)', () => {
-  // SDD: REQ-009 AC-009.2
-  it('has exactly one button (Calcular) and no scheme-switching control or storage of a preference', () => {
-    const buttonMatches = mainTs.match(/<button\b/gi) ?? [];
-    expect(buttonMatches).toHaveLength(1);
-    expect(mainTs).not.toContain('matchMedia(');
-    expect(mainTs).not.toContain('localStorage');
-    expect(mainTs).not.toContain('sessionStorage');
-    expect(mainTs.toLowerCase()).not.toContain('toggle');
   });
 });
 
 describe('markup — privacy and no external resources (NFR-001)', () => {
   // SDD: NFR-001 AC-N001.2
-  it('references no external origin in index.html or the markup src/main.ts produces', () => {
+  it('references no external origin and no font service', () => {
     for (const content of [indexHtml, mainTs]) {
       expect(content).not.toContain('http://');
       expect(content).not.toContain('https://');
       expect(content).not.toMatch(/(?:src|href)\s*=\s*["']\s*\/\//i);
+      expect(content).not.toMatch(/rel=["']preconnect["']/i);
+      expect(content).not.toContain('fonts.googleapis');
     }
   });
 });
 
 describe('markup — accessibility (NFR-002)', () => {
   // SDD: NFR-002 AC-N002.4
-  it('keeps the es-CR document language, the field label and the polite live region', () => {
+  it('keeps the es-CR document language, the field label, the live region and a hidden ₡ prefix', () => {
     expect(indexHtml).toMatch(/<html[^>]*\blang=["']es-CR["']/i);
-    expect(mainTs).toContain('Salario bruto mensual (CRC)');
+    expect(mainTs).toContain('<label for="gross-salary">Salario bruto mensual</label>');
     expect(mainTs).toMatch(/aria-live=["']polite["']/i);
+    expect(mainTs).toMatch(/<span class="field__prefix" aria-hidden="true">₡<\/span>/);
+  });
+
+  // SDD: REQ-005
+  it('renders results using replaceChildren in main.ts', () => {
+    expect(mainTs).toContain('replaceChildren');
   });
 });
