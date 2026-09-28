@@ -311,6 +311,18 @@
       "stage": "plan",
       "event": "blocked",
       "note": "Parked by user: Colilla redesign (spec rev 2, 1caf5ab, mockup.html) to be implemented outside the SDD flow under Art. B1.2 (text/style change) with SDD_BYPASS=1 and a user-approved commit"
+    },
+    {
+      "at": "2026-09-28T08:36:51.538Z",
+      "stage": "plan",
+      "event": "push",
+      "note": "feat/002-ui-redesign pushed to origin; PR #3 merged into main as ee8f012; branch deleted"
+    },
+    {
+      "at": "2026-09-28T08:36:51.625Z",
+      "stage": "plan",
+      "event": "note",
+      "note": "Delivered outside the SDD flow (Art. B1.2, SDD_BYPASS=1): a74f575 Colilla design, b47d786 Calcular button removed, 7e639da spec rev 3; merged in PR #3 (ee8f012). Stages plan to docs were not run and not approved, so the feature stays blocked instead of closed. The title in state.json is outdated: the shipped design is 'Colilla, night desk, paper'."
     }
   ]
 }
