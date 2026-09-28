@@ -2,7 +2,8 @@
 
 - **Feature:** `002-ui-redesign` · **Type:** feature
 - **Scopes:** `app`
-- **Revision:** 2 (rework after the user rejected the monochrome design; see section 9, Changelog)
+- **Revision:** 3 (rev 2 reworked the design after the user rejected the monochrome one; rev 3 removes the
+  "Calcular" button. See section 9, Changelog)
 
 > Note: the feature title in `state.json` still reads "…black, grey and white interface". That title is out of date:
 > colour is now allowed and the approved look is the "Colilla" night-desk design below. The orchestrator should update
@@ -21,7 +22,7 @@ paper slip in a typewriter face lists the gross salary, each mandatory deduction
 dotted leaders, dashed rules and a double rule above the net salary. When the result changes, the slip "prints"
 (slides out of the slot). That is the one motion moment on the page.
 
-What stays as it is: the calculation (001), live recalculation while typing, submitting with Enter or the button,
+What stays as it is: the calculation (001), live recalculation while typing, submitting with Enter,
 the empty state, the 001 error messages with accessible error semantics, privacy (nothing leaves the browser or is
 persisted), accessibility, and a responsive layout down to 320 px.
 
@@ -39,7 +40,7 @@ my net salary at a glance, on any device, in a way that feels familiar and pleas
 - Typography: Figtree for the desk (headline, copy, form) and Courier Prime for the paper (field value and slip),
   both served by the app itself (Q13).
 - Form column: headline, a short line of copy, the field with a visual `₡` prefix, the error line and the
-  "Calcular" button (Q17, Q18).
+  no button: the result updates while typing and Enter submits (Q17, Q18).
 - Result column: a slot with a paper slip. The slip shows a header, a sub-line with the legal year, the breakdown
   rows with dotted leaders, dashed rules between groups, a double rule above a bold, large "SALARIO NETO", and a
   footer "X % se va en rebajas" (Q14–Q16, Q22).
@@ -101,7 +102,7 @@ the same error messages as defined by feature 001.
 
 ### REQ-003 — Live recalculation while typing
 WHEN the user changes the value of the gross salary field THE SYSTEM SHALL update the result to reflect the current
-value, without the user pressing "Calcular".
+value, without the user pressing Enter.
 
 - **AC-003.1 [DOM]:** Given the field is empty, When the user types `1000000`, Then, without submitting, the slip
   shows the breakdown of AC-002.1.
@@ -115,15 +116,15 @@ value, without the user pressing "Calcular".
   produce the same breakdown or the same error message, except for the empty value (REQ-004, REQ-005).
 
 ### REQ-004 — Explicit submit remains available
-WHEN the user presses Enter in the field or activates the "Calcular" button THE SYSTEM SHALL evaluate the current value
+WHEN the user presses Enter in the field THE SYSTEM SHALL evaluate the current value
 and show the slip or the matching error message, including the error for an empty value.
 
-- **AC-004.1 [DOM]:** Given the field is empty, When the user activates "Calcular", Then the error
+- **AC-004.1 [DOM]:** Given the field is empty, When the user presses Enter in the field, Then the error
   "Ingrese el salario bruto mensual." is shown and no slip is shown.
 - **AC-004.2 [DOM]:** Given the field contains `2000000`, When the user presses Enter in the field, Then the slip for
   2 000 000,00 is shown with net salary ₡1 642 550,00.
 - **AC-004.3 [DOM]:** Given the page has just loaded, When the user moves focus with the Tab key only, Then the gross
-  salary field and then the "Calcular" button receive focus, in that order.
+  salary field receives focus, and the page has no button (the field is the only focusable control).
 
 ### REQ-005 — Empty state
 WHILE the gross salary field is empty and no submission of the empty value has been made THE SYSTEM SHALL show, in the
@@ -163,7 +164,7 @@ mark the field as invalid for assistive technologies, SHALL announce the message
 - **AC-007.3 [DOM]:** Given an error is shown, When the text content of the error element is read, Then it is exactly
   the 001 message, with no added characters.
 - **AC-007.4 [DOM]:** Given the field contains `-1`, When the value is evaluated, Then the error message is in the form
-  column, after the field and before the "Calcular" button in document order, and the result area contains no slip.
+  column, after the field in document order, and the result area contains no slip.
 
 ### REQ-008 — Retired (was: subtle motion of at most 300 ms)
 Replaced by REQ-013. AC-008.1 and AC-008.2 are retired.
@@ -188,7 +189,7 @@ this same look whatever the user's light or dark preference is.
 - **AC-010.4 [static]:** Given the page source, When searched, Then there is no control to switch looks or schemes
   and no stored preference.
 - **AC-010.5 [static]:** Given the stylesheet, When the font families are inspected, Then the headline, copy, label,
-  button and error use Figtree, and the field value and the whole slip use Courier Prime. Each has a generic fallback
+  and error use Figtree, and the field value and the whole slip use Courier Prime. Each has a generic fallback
   (`sans-serif` or `monospace`).
 - **AC-010.6 [DOM]:** Given the page with a slip shown, When its text is searched, Then it contains no "Pura Vida"
   text, stamp or seal.
@@ -238,7 +239,7 @@ down out of the slot and is revealed from the top, lasting at most 600 ms. No ot
   motion.
 - **AC-013.2 [DOM]:** Given the slip for `1000000` is shown, When the value changes to `1000000.0` (same amounts),
   Then the print motion is not replayed. When it then changes to `1500000`, Then it is replayed.
-- **AC-013.3 [DOM]:** Given the slip for `2000000` is shown, When the user presses Enter or activates "Calcular" with
+- **AC-013.3 [DOM]:** Given the slip for `2000000` is shown, When the user presses Enter with
   the same value, Then the print motion is replayed.
 - **AC-013.4 [static]:** Given the stylesheet, When animations and transitions are inspected, Then the only animation
   is the slip's print, its duration plus delay is at most 600 ms, and every other transition lasts at most 200 ms and
@@ -249,7 +250,7 @@ down out of the slot and is revealed from the top, lasting at most 600 ms. No ot
 ### REQ-014 — Form column content
 THE SYSTEM SHALL show, in the form column and in this order: the headline "¿Cuánto le queda de su salario?", the copy
 line "Escriba su salario bruto mensual y le imprimimos la colilla con cada rebaja de ley.", the label "Salario bruto
-mensual", the field on a paper background with a decorative `₡` prefix, the error line and the "Calcular" button
+mensual", the field on a paper background with a decorative `₡` prefix, and the error line. There is no button
 (Q17, Q18).
 
 - **AC-014.1 [DOM]:** Given the page has loaded, When its text is read, Then the main heading (level 1) is exactly
@@ -259,10 +260,8 @@ mensual", the field on a paper background with a decorative `₡` prefix, the er
   "Salario bruto mensual", its accessible name starts with that text, and the `₡` prefix is visible but is neither part
   of the field value nor exposed to assistive technologies.
 - **AC-014.3 [DOM]:** Given the page has loaded, When the form is inspected, Then it has exactly one field and one
-  submit button labelled "Calcular".
-- **AC-014.4 [static]:** Given the stylesheet, When the "Calcular" button styles are inspected, Then its background is
-  the paper colour `#e9e3d3`, its text is the paper ink `#1f2826`, and its keyboard focus indicator uses the focus ring
-  colour `#f2c14e` (Q18).
+  no button.
+- **AC-014.4** — Retired in revision 3 (was: "Calcular" button colours).
 
 ### REQ-015 — Desk layout and visual match with the mockup
 THE SYSTEM SHALL lay out the page as a desk that fills the viewport: at wide viewports, the form column on the left and
@@ -302,16 +301,16 @@ app's own files (Q13).
 THE SYSTEM SHALL keep keyboard focus visible on every interactive element, respect the reduced-motion preference, and
 meet WCAG 2.2 level AA contrast for text and for the boundaries of interactive elements.
 
-- **AC-N002.1 [static]** *(revised)*: Given the stylesheet, When the focus styles of the field and the "Calcular"
-  button are inspected, Then each has a visible keyboard focus indicator (the mockup uses a `#f2c14e` ring around the
+- **AC-N002.1 [static]** *(revised)*: Given the stylesheet, When the focus styles of the field
+  are inspected, Then it has a visible keyboard focus indicator (the mockup uses a `#f2c14e` ring around the
   field). No rule removes the focus indicator of an element without an equivalent replacement on that element or its
   container.
 - **AC-N002.2 [static]:** Given the stylesheet, When inspected, Then a rule applied under the reduced-motion preference
   disables transition and animation for the whole page (same check as AC-013.5).
 - **AC-N002.3 [static]** *(revised)*: Given the colour pairs of section 6, When their contrast ratios are computed, Then:
   normal text is at least 4.5:1 (desk ink and desk muted on desk and glow, warning on desk and glow, paper ink and
-  paper muted on paper, button text on button); large text (headline, net amount) is at least 3:1; the field's paper
-  surface, the button boundary and the focus indicator are at least 3:1 against the adjacent desk colour. Dotted
+  paper muted on paper); large text (headline, net amount) is at least 3:1; the field's paper
+  surface and the focus indicator are at least 3:1 against the adjacent desk colour. Dotted
   leaders, dashed rules and the slot bar are decorative and exempt.
 - **AC-N002.4 [DOM]** *(revised)*: Given the page markup, When inspected, Then the document language is `es-CR`, the
   field has the visible label of AC-014.2, the result area is a polite live region, and decorative elements (the `₡`
@@ -319,9 +318,9 @@ meet WCAG 2.2 level AA contrast for text and for the boundaries of interactive e
 
 ### NFR-003 — Responsive layout
 THE SYSTEM SHALL be usable without horizontal scrolling on viewports from 320 px wide up to desktop widths, SHALL never
-split an amount across lines, and SHALL give the field and the button touch targets of at least 44 × 44 px (Q25).
+split an amount across lines, and SHALL give the field a touch target of at least 44 × 44 px (Q25).
 
-- **AC-N003.1 [static]:** Given the stylesheet, When the field and "Calcular" button styles are inspected, Then their
+- **AC-N003.1 [static]:** Given the stylesheet, When the field styles are inspected, Then their
   minimum height is at least 44 px (2.75rem at a 16 px root size).
 - **AC-N003.2 [browser]** *(revised)*: Given a 320 × 640 viewport, When the page is rendered with gross salaries
   `5000000` and `100000000`, Then the page has no horizontal overflow, every slip row and the net amount are fully
@@ -344,7 +343,6 @@ error messages, the calculation and rounding, the colón amount format (`es-CR`,
 | Field label | `Salario bruto mensual` |
 | Field prefix (decorative) | `₡` |
 | Error line | the matching 001 message |
-| Button | `Calcular` |
 
 **Result column:**
 
@@ -399,7 +397,7 @@ decimal, written with a decimal comma, a space and `%` (e.g. `15,2 %`). For a gr
 are self-hosted (Q13).
 
 **Composition reference:** `specs/002-ui-redesign/mockup.html`, panel "Colilla" with class `dk-paper`, including its
-layout below 760 px (one column). The mockup is being updated to show the "Calcular" button, the error and empty
+layout below 760 px (one column). The mockup is being updated to show the error and empty
 states (Q18–Q20) and the darker muted paper ink `#545f5c` (Q23); the updated version is the reference for AC-015.3. Only that panel is the contract. The mockup's header, tabs, bottom note, rounded
 panel frame, sample value, script and external font links are not part of the design.
 
@@ -412,9 +410,9 @@ panel frame, sample value, script and external font links are not part of the de
 | Typing (live) | invalid, non-empty | error below the field, no slip | no |
 | Typing (live) | valid, amounts differ from the slip shown | slip | yes |
 | Typing (live) | valid, same amounts as the slip shown | slip (unchanged) | no |
-| Enter or "Calcular" | empty / only whitespace | `Ingrese el salario bruto mensual.` below the field, no slip | no |
-| Enter or "Calcular" | invalid, non-empty | error below the field, no slip | no |
-| Enter or "Calcular" | valid | slip | yes |
+| Enter | empty / only whitespace | `Ingrese el salario bruto mensual.` below the field, no slip | no |
+| Enter | invalid, non-empty | error below the field, no slip | no |
+| Enter | valid | slip | yes |
 
 **Motion:** the print is at most 600 ms. Other transitions are colour-only and at most 200 ms. Nothing moves under
 reduced motion.
@@ -429,7 +427,7 @@ the requirements, acceptance criteria and section 6 reflect them.
 |---|---|---|---|
 | Q1 | What does "more dynamic" mean for this feature? | Live recalculation as the user types (REQ-003), a short fade/slide when the result appears or changes, and hover/focus transitions on the field and button (REQ-008). No animated count-up of amounts and no copy-to-clipboard or share buttons. *(Motion part superseded by Q21.)* | accept all |
 | Q2 | With live recalculation, what should appear while the value is empty or invalid mid-typing? | Empty (or whitespace only): show the empty-state hint, no error. Invalid and non-empty (e.g. `-`, `abc`, `1000.123`): show the matching 001 error immediately. The "Ingrese el salario bruto mensual." error only appears on an explicit submit. | accept all |
-| Q3 | Should the "Calcular" button stay now that the result updates live? | Yes: keep the "Calcular" button and Enter-to-submit, for keyboard users and for users who expect a button. | accept all |
+| Q3 | Should the "Calcular" button stay now that the result updates live? | Yes: keep the "Calcular" button and Enter-to-submit, for keyboard users and for users who expect a button. *(Superseded in revision 3: no button, Enter only.)* | accept all |
 | Q4 | Fonts: load a web font from a third-party CDN, bundle a font with the app, or use system fonts? | System fonts only. *(Superseded by Q13.)* | accept all |
 | Q5 | Dark mode: none, follow the OS, or offer a toggle? | Follow the OS/browser preference with a light and a dark monochrome scheme; no toggle. *(Superseded by the user's rework decision: a single look, REQ-010.)* | accept all |
 | Q6 | Should the result area show something before any input, and with what text? | Yes: "Ingrese su salario bruto mensual para ver el desglose." | accept all |
@@ -444,10 +442,10 @@ the requirements, acceptance criteria and section 6 reflect them.
 | Q15 | The mockup shows deductions and the total with a leading minus sign ("−₡82 500,00"); revision 1 said no signs (Q7). Keep the minus sign? | Yes, as in the mockup: U+2212 before the five deduction and total amounts. Gross and net have no sign (AC-011.2). | accept all defaults |
 | Q16 | The slip has a header "COLILLA DE PAGO" and a sub-line "Estimación mensual · parámetros 2026". Should the sub-line replace the 001 note "Parámetros legales vigentes: 2026"? | Yes: show the header and the sub-line as in the mockup. The sub-line carries the legal year, so the separate 001 note is no longer shown. | accept all defaults |
 | Q17 | Headline, title and label: should "¿Cuánto le queda de su salario?" replace the visible heading "Calculadora de Salario Neto", and should the label become "Salario bruto mensual" with a `₡` prefix instead of "Salario bruto mensual (CRC)"? | Yes to both, as in the mockup. The headline is the page's main heading, the document title stays "Calculadora de Salario Neto - Costa Rica", and the `₡` prefix is decorative (hidden from assistive technologies). | accept all defaults |
-| Q18 | The mockup has no "Calcular" button, but the button must stay. Where and how should it appear? | In the form column below the field and the error line, labelled "Calcular", at least 44 px tall, in the paper and ink colours (paper background, dark ink text) with the same amber focus ring. Its exact look is confirmed with the screenshots of AC-015.3. | accept all defaults |
+| Q18 | The mockup has no "Calcular" button, but the button must stay. Where and how should it appear? | In the form column below the field and the error line, labelled "Calcular", at least 44 px tall, in the paper and ink colours (paper background, dark ink text) with the same amber focus ring. Its exact look is confirmed with the screenshots of AC-015.3. *(Superseded in revision 3: the button was removed.)* | accept all defaults |
 | Q19 | On an invalid value the mockup keeps the previous slip on screen and shows the error in amber below the field. What should the result column show during an error? | Error text in `#ffd08a` directly below the field (as in the mockup), and **no** slip: the slot stays empty, as 001 and revision 1 required ("no breakdown on error"). Showing an outdated slip next to an error could be misread. | accept all defaults |
 | Q20 | The mockup has no empty state (it starts with a sample value). Where does the hint go? | The app starts with an empty field. The result column shows the empty slot bar with the hint "Ingrese su salario bruto mensual para ver el desglose." below it, in desk-muted colour, and no slip. | accept all defaults |
-| Q21 | When exactly should the slip "print", and how long may it take? The mockup reprints on every keystroke and lasts 550 ms, above revision 1's 300 ms limit. | The print plays when the slip appears or its amounts change (restarting if one is still running), and on every Enter or "Calcular" with a valid value. It does not replay when live typing gives the same amounts (e.g. `1000000` → `1000000.0`). At most 600 ms. It is the only animation; hover and focus changes are colour-only, at most 200 ms. Nothing moves under reduced motion. | accept all defaults |
+| Q21 | When exactly should the slip "print", and how long may it take? The mockup reprints on every keystroke and lasts 550 ms, above revision 1's 300 ms limit. | The print plays when the slip appears or its amounts change (restarting if one is still running), and on every Enter with a valid value. It does not replay when live typing gives the same amounts (e.g. `1000000` → `1000000.0`). At most 600 ms. It is the only animation; hover and focus changes are colour-only, at most 200 ms. Nothing moves under reduced motion. | accept all defaults |
 | Q22 | How exactly is "X % se va en rebajas" computed and written? | Total deductions ÷ gross × 100 from the exact amounts, rounded half up to one decimal, always one decimal, decimal comma, a space before `%` (e.g. "15,2 %", "11,7 %", "10,0 %"). For a gross of 0 it shows "0,0 %". | accept all defaults |
 | Q23 | The mockup's muted paper ink `#5f6b68` on the paper `#e9e3d3` is about 4.3:1, below the 4.5:1 AA minimum for the small sub-line, rates and footer. How should this be fixed? | Darken only that muted ink until it reaches at least 4.5:1 (e.g. `#545f5c`, about 5.2:1). Everything else stays as in the mockup. | accept all defaults (muted paper ink `#545f5c`) |
 | Q24 | Layout checks (320 px, desktop, no horizontal scroll, identical look under light/dark preference) need a real browser, which jsdom is not. How should the [browser] and [visual] ACs be covered? | The plan adds, through an explicit task, a headless-browser test run locally against the built app, with no network. It renders at the listed widths, checks overflow and layout, compares the light and dark preference renders, and saves screenshots at 320 × 640 and 1280 × 800. The user then compares those screenshots with the mockup; that confirmation (AC-015.3) is recorded in the verify report before approval. | accept all defaults |
@@ -462,11 +460,19 @@ the requirements, acceptance criteria and section 6 reflect them.
 - **Leader:** the dotted line that joins a row's label and its amount.
 - **Deductions share:** total deductions as a percentage of the gross salary, shown in the slip footer.
 - **Live recalculation:** updating the result as the field value changes, without submitting.
-- **Submission:** pressing Enter in the field or activating the "Calcular" button.
+- **Submission:** pressing Enter in the field.
 - **Empty state:** what the result column shows while the field is empty and nothing has been submitted.
 - **Reduced motion:** the user's operating system or browser preference asking for minimal animation.
 
 ## 9. Changelog
+
+**Revision 3 (2026-09-28).** After seeing the implemented design, the user removed the "Calcular" button: the slip
+updates while typing, so the button added nothing. Enter in the field still submits, including the empty-value error.
+- **Revised:** REQ-004 and AC-004.1 (submit is Enter only), AC-004.3 (the field is the only focusable control),
+  AC-007.4, AC-010.5, AC-013.3, REQ-014 and AC-014.3 (no button), AC-N002.1, AC-N002.3, NFR-003 and AC-N003.1
+  (field only), section 6 tables and the glossary.
+- **Retired:** AC-014.4 (button colours).
+- Q3 and Q18 are superseded by this decision.
 
 **Revision 2 (rework, 2026-09-28).** The user rejected the monochrome design after seeing it and approved the
 "Colilla, night desk, paper" mockup (`mockup.html`, `dk-paper`) as the single look. Colour is now allowed.
