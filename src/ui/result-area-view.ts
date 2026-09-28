@@ -16,7 +16,7 @@ export const SLIP_HEADER = 'COLILLA DE PAGO';
 /** Minus sign written before deduction and total amounts (U+2212, AC-011.2). */
 export const MINUS_SIGN = '−';
 
-/** `live` = the field changed while typing; `submit` = Enter or "Calcular". */
+/** `live` = the field changed while typing; `submit` = Enter in the field. */
 export type EvaluationMode = 'live' | 'submit';
 
 export type SlipRowRole = 'gross' | 'deduction' | 'total' | 'net';

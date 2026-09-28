@@ -72,7 +72,6 @@ if (app) {
             <input id="gross-salary" name="gross-salary" type="text" inputmode="decimal" autocomplete="off" />
           </div>
           <div class="error-line"></div>
-          <button type="submit" class="calc">Calcular</button>
         </form>
       </div>
       <section id="result" class="slot" aria-live="polite"></section>

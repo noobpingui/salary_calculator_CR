@@ -52,7 +52,6 @@
   --desk-muted: #8fb3aa;
   --slot: #051312;
   --paper: #e9e3d3;
-  --paper-hover: #f3eee1;
   --paper-ink: #1f2826;
   /* Darker than the original mockup's muted ink, to reach 4.5:1 on the paper (Q23). */
   --paper-muted: #545f5c;
@@ -179,7 +178,7 @@ label {
   box-shadow: 0 0 0 3px var(--focus);
 }
 
-/* Keeps its height when empty so the button does not jump when an error appears. */
+/* Keeps its height when empty so the layout does not jump when an error appears. */
 .error-line {
   min-height: 1.45em;
   margin-top: 10px;
@@ -190,29 +189,6 @@ label {
   color: var(--warn);
   font-size: 0.95rem;
   font-weight: 500;
-}
-
-.calc {
-  justify-self: start;
-  min-height: 48px;
-  margin-top: 10px;
-  padding: 0 26px;
-  border: 0;
-  border-radius: 10px;
-  background: var(--paper);
-  color: var(--paper-ink);
-  font: 700 1rem var(--font-desk);
-  cursor: pointer;
-  transition: background-color 0.15s;
-}
-
-.calc:hover {
-  background: var(--paper-hover);
-}
-
-.calc:focus-visible {
-  outline: 3px solid var(--focus);
-  outline-offset: 3px;
 }
 
 /* ---------- Slot and slip ---------- */

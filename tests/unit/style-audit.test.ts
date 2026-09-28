@@ -76,7 +76,6 @@ describe('stylesheet — single "night desk, paper" look (REQ-010)', () => {
   it('sets the desk in Figtree and the field value and slip in Courier Prime, with generic fallbacks', () => {
     const desk = valueFor(':root', 'font-family') ?? '';
     expect(desk).toMatch(/^'Figtree',.*\bsans-serif$/);
-    expect(valueFor('.calc', 'font')).toContain("'Figtree'");
 
     for (const selector of ['.field input', '.slip']) {
       expect(valueFor(selector, 'font-family'), selector).toMatch(
@@ -190,15 +189,6 @@ describe('stylesheet — print motion (REQ-013)', () => {
   });
 });
 
-describe('stylesheet — "Calcular" button (REQ-014)', () => {
-  // SDD: REQ-014 AC-014.4
-  it('paints the button in paper and ink, with an amber focus ring', () => {
-    expect(valueFor('.calc', 'background')).toBe('#e9e3d3');
-    expect(valueFor('.calc', 'color')).toBe('#1f2826');
-    expect(valueFor('.calc:focus-visible', 'outline')).toContain('#f2c14e');
-  });
-});
-
 describe('stylesheet — self-hosted fonts, no external resources (NFR-001)', () => {
   // SDD: NFR-001 AC-N001.2
   it('references no external origin and has no @import', () => {
@@ -242,10 +232,9 @@ describe('stylesheet — self-hosted fonts, no external resources (NFR-001)', ()
 
 describe('stylesheet — accessibility (NFR-002)', () => {
   // SDD: NFR-002 AC-N002.1
-  it('gives the field and the button a visible amber focus indicator', () => {
+  it('gives the field a visible amber focus indicator', () => {
     expect(valueFor('.field:focus-within', 'box-shadow')).toContain('#f2c14e');
     expect(valueFor('.field--invalid:focus-within', 'box-shadow')).toContain('#f2c14e');
-    expect(valueFor('.calc:focus-visible', 'outline')).toMatch(/\b3px solid #f2c14e\b/);
 
     const removed: string[] = [];
     root.walkDecls('outline', (decl) => {
@@ -254,6 +243,7 @@ describe('stylesheet — accessibility (NFR-002)', () => {
     });
     // The input's own outline is replaced by the ring on its `.field` container.
     expect(removed).toEqual(['.field input:focus']);
+    expect(cssSource).not.toContain('.calc');
   });
 
   // SDD: NFR-002 AC-N002.3
@@ -268,16 +258,12 @@ describe('stylesheet — accessibility (NFR-002)', () => {
       ['warn', 'desk-glow'],
       ['paper-ink', 'paper'],
       ['paper-muted', 'paper'],
-      ['paper-ink', 'paper-hover'],
     ];
     for (const [fg, bg] of normalText) {
       expect(contrastRatio(t(fg), t(bg)), `${fg} on ${bg}`).toBeGreaterThanOrEqual(4.5);
     }
     for (const bg of ['desk', 'desk-glow']) {
-      expect(
-        contrastRatio(t('paper'), t(bg)),
-        `paper field/button on ${bg}`,
-      ).toBeGreaterThanOrEqual(3);
+      expect(contrastRatio(t('paper'), t(bg)), `paper field on ${bg}`).toBeGreaterThanOrEqual(3);
       expect(contrastRatio(t('focus'), t(bg)), `focus on ${bg}`).toBeGreaterThanOrEqual(3);
     }
   });
@@ -285,8 +271,8 @@ describe('stylesheet — accessibility (NFR-002)', () => {
 
 describe('stylesheet — responsive layout (NFR-003)', () => {
   // SDD: NFR-003 AC-N003.1
-  it('gives the field and the button a minimum height of at least 44 px', () => {
-    for (const selector of ['.field', '.field input', '.calc']) {
+  it('gives the field a minimum height of at least 44 px', () => {
+    for (const selector of ['.field', '.field input']) {
       expect(toPixels(valueFor(selector, 'min-height') ?? ''), selector).toBeGreaterThanOrEqual(44);
     }
   });

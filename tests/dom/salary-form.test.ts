@@ -20,10 +20,6 @@ function getGrossSalaryInput(): HTMLInputElement {
   return screen.getByRole('textbox', { name: /^Salario bruto mensual/ });
 }
 
-function getCalcularButton(): HTMLElement {
-  return screen.getByRole('button', { name: 'Calcular' });
-}
-
 function getResult(): HTMLElement {
   const result = document.querySelector<HTMLElement>('#result');
   if (!result) throw new Error('#result should exist');
@@ -123,9 +119,9 @@ describe('salary form — live recalculation while typing (REQ-003)', () => {
 
 describe('salary form — explicit submit (REQ-004)', () => {
   // SDD: REQ-004 AC-004.1
-  it('shows the empty-value error and no slip when "Calcular" is activated on an empty field', async () => {
+  it('shows the empty-value error and no slip when Enter is pressed on an empty field', async () => {
     const { user } = await renderApp();
-    await user.click(getCalcularButton());
+    await user.type(getGrossSalaryInput(), '{Enter}');
 
     expect(screen.getByRole('alert').textContent).toBe(GROSS_SALARY_ERROR_MESSAGES.empty);
     expect(getSlip()).toBeNull();
@@ -140,13 +136,12 @@ describe('salary form — explicit submit (REQ-004)', () => {
   });
 
   // SDD: REQ-004 AC-004.3
-  it('moves focus to the field then the "Calcular" button when tabbing from page load', async () => {
+  it('moves focus to the field, the only focusable control, when tabbing from page load', async () => {
     const { user } = await renderApp();
 
     await user.tab();
     expect(document.activeElement).toBe(getGrossSalaryInput());
-    await user.tab();
-    expect(document.activeElement).toBe(getCalcularButton());
+    expect(screen.queryByRole('button')).toBeNull();
   });
 });
 
@@ -251,16 +246,13 @@ describe('salary form — accessible errors (REQ-007)', () => {
   });
 
   // SDD: REQ-007 AC-007.4
-  it('places the error after the field and before "Calcular", with no slip', async () => {
+  it('places the error in the form, after the field, with no slip', async () => {
     const { user } = await renderApp();
     const input = getGrossSalaryInput();
     await user.type(input, '-1');
 
     const alert = screen.getByRole('alert');
     expect(input.compareDocumentPosition(alert)).toBe(Node.DOCUMENT_POSITION_FOLLOWING);
-    expect(alert.compareDocumentPosition(getCalcularButton())).toBe(
-      Node.DOCUMENT_POSITION_FOLLOWING,
-    );
     expect(alert.closest('form')).not.toBeNull();
     expect(getSlip()).toBeNull();
   });
@@ -293,7 +285,7 @@ describe('salary form — print motion (REQ-013)', () => {
   });
 
   // SDD: REQ-013 AC-013.3
-  it('reprints on Enter or "Calcular" with the same value', async () => {
+  it('reprints on Enter with the same value', async () => {
     const { user } = await renderApp();
     const input = getGrossSalaryInput();
 
@@ -302,10 +294,7 @@ describe('salary form — print motion (REQ-013)', () => {
     await user.type(input, '{Enter}');
     const entered = getSlip();
     expect(entered).not.toBe(typed);
-
-    await user.click(getCalcularButton());
-    expect(getSlip()).not.toBe(entered);
-    expect(getSlip()?.classList.contains('print')).toBe(true);
+    expect(entered?.classList.contains('print')).toBe(true);
   });
 });
 
@@ -338,15 +327,12 @@ describe('salary form — form column content (REQ-014)', () => {
   });
 
   // SDD: REQ-014 AC-014.3
-  it('has exactly one field and one submit button labelled "Calcular"', async () => {
+  it('has exactly one field and no button', async () => {
     await renderApp();
     const form = document.querySelector('form');
 
     expect(form?.querySelectorAll('input, select, textarea')).toHaveLength(1);
-    const buttons = form?.querySelectorAll('button');
-    expect(buttons).toHaveLength(1);
-    expect(buttons?.[0]?.getAttribute('type')).toBe('submit');
-    expect(buttons?.[0]?.textContent).toBe('Calcular');
+    expect(document.querySelectorAll('button, input[type="submit"]')).toHaveLength(0);
   });
 });
 

@@ -39,7 +39,7 @@ describe('markup — single look (REQ-010)', () => {
 
   // SDD: REQ-010 AC-010.4
   it('has no look switch and no stored preference', () => {
-    expect(mainTs.match(/<button\b/gi) ?? []).toHaveLength(1);
+    expect(mainTs).not.toMatch(/<button\b/i);
     for (const content of [indexHtml, ...Object.values(sourceFiles)]) {
       expect(content).not.toContain('matchMedia(');
       expect(content).not.toContain('localStorage');
