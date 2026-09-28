@@ -1,0 +1,173 @@
+<title>Salario Neto Directions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Figtree:wght@400;500;700&display=swap">
+<style>
+  /* Mockup chrome (not part of the design) */
+  :root {
+    --chrome-bg: #f4f4f6; --chrome-ink: #1c1c22; --chrome-muted: #5d5d6b; --chrome-line: #d9d9e0;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) { color-scheme: dark; --chrome-bg: #17171c; --chrome-ink: #ececf1; --chrome-muted: #a3a3b2; --chrome-line: #30303a; }
+  }
+  :root[data-theme="dark"] { color-scheme: dark; --chrome-bg: #17171c; --chrome-ink: #ececf1; --chrome-muted: #a3a3b2; --chrome-line: #30303a; }
+
+  * { box-sizing: border-box; }
+  body { background: var(--chrome-bg); color: var(--chrome-ink); font-family: Figtree, system-ui, sans-serif; }
+  .chrome { padding: 20px 16px 12px; max-width: 1120px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 12px 24px; align-items: end; justify-content: space-between; }
+  .chrome h1 { margin: 0; font-size: 1.15rem; font-weight: 700; }
+  .chrome p { margin: 4px 0 0; color: var(--chrome-muted); font-size: .9rem; max-width: 62ch; }
+  .states { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; font-size: .9rem; color: var(--chrome-muted); }
+  .states button { font: inherit; border: 1px solid var(--chrome-line); background: transparent; color: var(--chrome-ink); padding: 7px 13px; border-radius: 999px; cursor: pointer; }
+  .states button:hover { border-color: var(--chrome-ink); }
+  .states button:focus-visible { outline: 2px solid var(--chrome-ink); outline-offset: 2px; }
+  .stage { max-width: 1120px; margin: 0 auto; padding: 0 16px 32px; }
+  .note { max-width: 1120px; margin: 0 auto; padding: 0 16px 28px; color: var(--chrome-muted); font-size: .85rem; }
+
+  /* ---------- Colilla · night desk, paper (the design) ---------- */
+  .colilla {
+    --desk: #0b2624; --desk-glow: #133b38; --desk-ink: #dfeee9; --desk-muted: #8fb3aa; --slot: #051312;
+    --paper: #e9e3d3; --paper-ink: #1f2826; --paper-muted: #545f5c; --leader: #a9b0a8; --rule: #8b958f;
+    --focus: #f2c14e; --warn: #ffd08a;
+    border-radius: 18px; min-height: 560px;
+    background: var(--desk); background-image: radial-gradient(circle at 20% 10%, var(--desk-glow) 0, transparent 55%);
+    color: var(--desk-ink); padding: clamp(24px, 5vw, 56px);
+    display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 420px); gap: 40px; align-items: start;
+  }
+  .colilla h2 { font-weight: 700; font-size: clamp(1.8rem, 4vw, 2.6rem); line-height: 1.1; margin: 0 0 12px; text-wrap: balance; }
+  .colilla .ask p { color: var(--desk-muted); margin: 0 0 28px; max-width: 42ch; line-height: 1.5; }
+  .colilla form { max-width: 380px; display: grid; gap: 0; }
+  .colilla label { font-size: .9rem; color: var(--desk-muted); margin-bottom: 8px; }
+  .colilla .field { display: flex; align-items: center; background: var(--paper); border-radius: 10px; padding: 4px 16px; color: var(--paper-ink); }
+  .colilla .field span { font-family: 'Courier Prime', 'Courier New', monospace; font-size: 1.6rem; color: var(--paper-muted); }
+  .colilla .field input { border: 0; background: transparent; font-family: 'Courier Prime', 'Courier New', monospace; font-size: 1.6rem; padding: 12px 8px; width: 100%; color: var(--paper-ink); font-variant-numeric: tabular-nums; }
+  .colilla .field input:focus { outline: none; }
+  .colilla .field:focus-within { box-shadow: 0 0 0 3px var(--focus); }
+  .colilla .field.invalid { box-shadow: 0 0 0 2px var(--warn); }
+  .colilla .field.invalid:focus-within { box-shadow: 0 0 0 3px var(--focus); }
+  .colilla .err { color: var(--warn); margin-top: 10px; min-height: 1.45em; font-size: .95rem; font-weight: 500; }
+  .colilla .calc { margin-top: 10px; justify-self: start; min-height: 48px; padding: 0 26px; border: 0; border-radius: 10px; background: var(--paper); color: var(--paper-ink); font: 700 1rem Figtree, system-ui, sans-serif; cursor: pointer; transition: background-color .15s; }
+  .colilla .calc:hover { background: #f3eee1; }
+  .colilla .calc:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+
+  .colilla .slot { position: relative; padding-top: 10px; }
+  .colilla .slot::before { content: ""; position: absolute; top: 0; left: -10px; right: -10px; height: 12px; border-radius: 6px; background: var(--slot); box-shadow: inset 0 3px 6px rgba(0,0,0,.45); z-index: 2; }
+  .colilla .hint { color: var(--desk-muted); margin: 22px 4px 0; line-height: 1.5; }
+  .colilla .slip { position: relative; background: var(--paper); color: var(--paper-ink); font-family: 'Courier Prime', 'Courier New', monospace; padding: 28px 24px 36px; font-size: .95rem; -webkit-mask: linear-gradient(#000 0 0) top/100% calc(100% - 10px) no-repeat, conic-gradient(from 135deg at top, #0000, #000 1deg 89deg, #0000 90deg) bottom/16px 10px repeat-x; mask: linear-gradient(#000 0 0) top/100% calc(100% - 10px) no-repeat, conic-gradient(from 135deg at top, #0000, #000 1deg 89deg, #0000 90deg) bottom/16px 10px repeat-x; }
+  .colilla .slip.print { animation: print .55s cubic-bezier(.2,.8,.2,1); }
+  @keyframes print { from { transform: translateY(-40%); clip-path: inset(40% 0 0 0); } to { transform: none; clip-path: inset(0 0 0 0); } }
+  .colilla .slip h3 { margin: 0; text-align: center; font-size: 1rem; font-weight: 700; }
+  .colilla .slip .sub { text-align: center; color: var(--paper-muted); font-size: .82rem; margin: 4px 0 18px; }
+  .colilla .row { display: flex; gap: 6px; align-items: baseline; padding: 5px 0; }
+  .colilla .row .dots { flex: 1 1 20px; border-bottom: 2px dotted var(--leader); transform: translateY(-4px); min-width: 12px; }
+  .colilla .row .amt { white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .colilla .row .rate { color: var(--paper-muted); }
+  .colilla .rule { border-top: 1px dashed var(--rule); margin: 10px 0; }
+  .colilla .net { border-top: 3px double var(--paper-ink); margin-top: 12px; padding-top: 12px; display: flex; justify-content: space-between; align-items: baseline; gap: 4px 12px; flex-wrap: wrap; }
+  .colilla .net .lbl { font-weight: 700; }
+  .colilla .net .amt { font-size: clamp(1.35rem, 6vw, 1.7rem); font-weight: 700; white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .colilla .foot { color: var(--paper-muted); font-size: .82rem; margin-top: 18px; text-align: center; }
+
+  @media (max-width: 760px) { .colilla { grid-template-columns: 1fr; } }
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+</style>
+
+<header class="chrome">
+  <div>
+    <h1>Salario neto: Colilla, night desk</h1>
+    <p>Working mockup with the real 2026 rates. It opens empty, as the app will. Type a salary, press Calcular, or jump to a state:</p>
+  </div>
+  <div class="states" aria-label="Mockup states">
+    <button type="button" data-v="">Vacío</button>
+    <button type="button" data-v="1500000">₡1 500 000</button>
+    <button type="button" data-v="100000000">₡100 000 000</button>
+    <button type="button" data-v="12,345">Con error</button>
+  </div>
+</header>
+
+<main class="stage">
+  <section class="colilla" aria-label="Calculadora">
+    <div class="ask">
+      <h2>¿Cuánto le queda de su salario?</h2>
+      <p>Escriba su salario bruto mensual y le imprimimos la colilla con cada rebaja de ley.</p>
+      <form id="form" novalidate>
+        <label for="salario">Salario bruto mensual</label>
+        <div class="field" id="field"><span aria-hidden="true">₡</span><input id="salario" inputmode="decimal" autocomplete="off" aria-describedby="err"></div>
+        <div class="err" id="err" role="alert"></div>
+        <button class="calc" type="submit">Calcular</button>
+      </form>
+    </div>
+    <div class="slot" id="slot" aria-live="polite"></div>
+  </section>
+</main>
+<p class="note">Mockup only: nothing is saved or sent anywhere. Visual target for feature 002-ui-redesign. Fonts load from Google here only; the app will ship them itself.</p>
+
+<script>
+  // 2026 parameters, mirrored from src/domain/legal-parameters.ts
+  const P = { sem: 550, ivm: 433, lpt: 100,
+    brackets: [[91800000, 0], [134700000, 1000], [236400000, 1500], [472700000, 2000], [Infinity, 2500]] };
+  const pct = (c, bp) => Math.floor((c * bp + 5000) / 10000);
+  function calc(g) {
+    const sem = pct(g, P.sem), ivm = pct(g, P.ivm), lpt = pct(g, P.lpt);
+    let tax = 0, lower = 0;
+    for (const [up, bp] of P.brackets) { const t = Math.min(g, up) - lower; if (t > 0) tax += pct(t, bp); lower = up; }
+    const total = sem + ivm + lpt + tax;
+    return { g, sem, ivm, lpt, tax, total, net: g - total };
+  }
+  function parse(raw) {
+    let s = raw.replace(/[\s₡ ]/g, '');
+    if (!s) return { err: 'Ingrese el salario bruto mensual.' };
+    if (s.includes(',') && !s.includes('.')) s = s.replace(',', '.'); else s = s.replace(/,/g, '');
+    if (!/^-?\d+(\.\d*)?$/.test(s)) return { err: 'El salario bruto debe ser un número válido.' };
+    if (s.startsWith('-')) return { err: 'El salario bruto no puede ser negativo.' };
+    if ((s.split('.')[1] || '').length > 2) return { err: 'El salario bruto admite como máximo 2 decimales.' };
+    return { cents: Math.round(parseFloat(s) * 100) };
+  }
+  const fmt = new Intl.NumberFormat('es-CR', { style: 'currency', currency: 'CRC', minimumFractionDigits: 2 });
+  const crc = c => fmt.format(c / 100);
+  const share = (c, g) => { const v = g ? Math.floor(c * 1000 / g + 0.5) / 10 : 0; return v.toLocaleString('es-CR', { minimumFractionDigits: 1, maximumFractionDigits: 1 }) + ' %'; };
+
+  const input = document.getElementById('salario'), field = document.getElementById('field');
+  const err = document.getElementById('err'), slot = document.getElementById('slot');
+  const HINT = 'Ingrese su salario bruto mensual para ver el desglose.';
+  let lastKey = null;
+
+  function slipHTML(r) {
+    const row = (l, amt, rate = '') => `<div class="row"><span>${l}${rate ? ` <span class="rate">${rate}</span>` : ''}</span><span class="dots"></span><span class="amt">${amt}</span></div>`;
+    return `<div class="slip"><h3>COLILLA DE PAGO</h3><div class="sub">Estimación mensual · parámetros 2026</div>
+      ${row('Salario bruto', crc(r.g))}<div class="rule"></div>
+      ${row('CCSS SEM', '−' + crc(r.sem), '5,50 %')}
+      ${row('CCSS IVM', '−' + crc(r.ivm), '4,33 %')}
+      ${row('Banco Popular', '−' + crc(r.lpt), '1,00 %')}
+      ${row('Impuesto renta', '−' + crc(r.tax))}<div class="rule"></div>
+      ${row('Total rebajas', '−' + crc(r.total))}
+      <div class="net"><span class="lbl">SALARIO NETO</span><span class="amt">${crc(r.net)}</span></div>
+      <div class="foot">${share(r.total, r.g)} se va en rebajas</div></div>`;
+  }
+
+  function show(mode) {
+    const raw = input.value;
+    if (!raw.trim() && mode === 'live') {
+      err.textContent = ''; field.classList.remove('invalid'); input.removeAttribute('aria-invalid');
+      slot.innerHTML = `<p class="hint">${HINT}</p>`; lastKey = null; return;
+    }
+    const p = parse(raw);
+    if (p.err) {
+      err.textContent = p.err; field.classList.add('invalid'); input.setAttribute('aria-invalid', 'true');
+      slot.innerHTML = ''; lastKey = null; return;
+    }
+    err.textContent = ''; field.classList.remove('invalid'); input.removeAttribute('aria-invalid');
+    const key = String(p.cents);
+    if (key === lastKey && mode === 'live') return;
+    slot.innerHTML = slipHTML(calc(p.cents));
+    slot.firstElementChild.classList.add('print');
+    lastKey = key;
+  }
+
+  input.addEventListener('input', () => show('live'));
+  document.getElementById('form').addEventListener('submit', e => { e.preventDefault(); show('submit'); });
+  document.querySelectorAll('.states button').forEach(b => b.addEventListener('click', () => {
+    input.value = b.dataset.v; show(b.dataset.v ? 'submit' : 'live');
+  }));
+  show('live');
+</script>

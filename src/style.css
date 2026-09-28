@@ -1,53 +1,359 @@
-:root {
-  font-family: system-ui, sans-serif;
-  color-scheme: light dark;
+/*
+ * "Colilla, night desk, paper" (spec 002 rev 2, mockup.html panel dk-paper).
+ * A single look: no light/dark variants. Fonts are self-hosted (NFR-001), Latin subset, SIL OFL.
+ */
+
+@font-face {
+  font-family: 'Figtree';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('./assets/fonts/figtree-latin-400-normal.woff2') format('woff2');
 }
 
-main {
-  max-width: 32rem;
-  margin: 2rem auto;
-  padding: 0 1rem;
+@font-face {
+  font-family: 'Figtree';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('./assets/fonts/figtree-latin-500-normal.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Figtree';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('./assets/fonts/figtree-latin-700-normal.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Courier Prime';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('./assets/fonts/courier-prime-latin-400-normal.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Courier Prime';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('./assets/fonts/courier-prime-latin-700-normal.woff2') format('woff2');
+}
+
+:root {
+  color-scheme: dark;
+
+  --desk: #0b2624;
+  --desk-glow: #133b38;
+  --desk-ink: #dfeee9;
+  --desk-muted: #8fb3aa;
+  --slot: #051312;
+  --paper: #e9e3d3;
+  --paper-ink: #1f2826;
+  /* Darker than the original mockup's muted ink, to reach 4.5:1 on the paper (Q23). */
+  --paper-muted: #545f5c;
+  --leader: #a9b0a8;
+  --rule: #8b958f;
+  --focus: #f2c14e;
+  --warn: #ffd08a;
+
+  --font-desk: 'Figtree', system-ui, sans-serif;
+  --font-paper: 'Courier Prime', 'Courier New', monospace;
+
+  font-family: var(--font-desk);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background-color: var(--desk);
+  background-image: radial-gradient(circle at 20% 10%, var(--desk-glow) 0, transparent 55%);
+  background-attachment: fixed;
+  color: var(--desk-ink);
+}
+
+/* ---------- Desk layout ---------- */
+
+.desk {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: clamp(24px, 5vw, 56px) clamp(16px, 5vw, 56px);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 420px);
+  gap: 40px;
+  align-items: start;
+}
+
+@media (max-width: 760px) {
+  .desk {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* ---------- Form column ---------- */
+
+h1 {
+  margin: 0 0 12px;
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  font-weight: 700;
+  line-height: 1.1;
+  text-wrap: balance;
+}
+
+.lead {
+  margin: 0 0 28px;
+  max-width: 42ch;
+  color: var(--desk-muted);
 }
 
 form {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-#result {
-  display: block;
-  margin-top: 1rem;
-}
-
-.breakdown {
   display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 0.25rem 1rem;
-  margin: 0;
+  max-width: 380px;
 }
 
-.breakdown dt {
-  grid-column: 1;
+label {
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+  color: var(--desk-muted);
 }
 
-.breakdown dd {
-  grid-column: 2;
-  margin: 0;
-  text-align: right;
+.field {
+  display: flex;
+  align-items: center;
+  min-height: 2.75rem;
+  padding: 4px 16px;
+  border-radius: 10px;
+  background: var(--paper);
+  color: var(--paper-ink);
+  transition: box-shadow 0.15s;
 }
 
-.breakdown dt:last-of-type,
-.breakdown dd:last-of-type {
-  font-weight: bold;
+.field__prefix,
+.field input {
+  font-family: var(--font-paper);
+  font-size: 1.6rem;
+}
+
+.field__prefix {
+  color: var(--paper-muted);
+}
+
+.field input {
+  width: 100%;
+  min-width: 0;
+  min-height: 2.75rem;
+  padding: 8px;
+  border: 0;
+  background: transparent;
+  color: var(--paper-ink);
+  caret-color: var(--paper-ink);
+  font-variant-numeric: tabular-nums;
+}
+
+/* The focus indicator is drawn on the paper field around the input (AC-N002.1). */
+.field input:focus {
+  outline: none;
+}
+
+.field:focus-within {
+  box-shadow: 0 0 0 3px var(--focus);
+}
+
+.field--invalid {
+  box-shadow: 0 0 0 2px var(--warn);
+}
+
+.field--invalid:focus-within {
+  box-shadow: 0 0 0 3px var(--focus);
+}
+
+/* Keeps its height when empty so the layout does not jump when an error appears. */
+.error-line {
+  min-height: 1.45em;
+  margin-top: 10px;
 }
 
 .error {
-  color: #b00020;
+  margin: 0;
+  color: var(--warn);
+  font-size: 0.95rem;
+  font-weight: 500;
 }
 
-.legal-year {
-  margin-top: 0.5rem;
-  font-size: 0.875rem;
-  color: gray;
+/* ---------- Slot and slip ---------- */
+
+.slot {
+  position: relative;
+  padding-top: 10px;
+}
+
+/* The dark bar the slip comes out of (decorative). */
+.slot::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -10px;
+  right: -10px;
+  z-index: 2;
+  height: 12px;
+  border-radius: 6px;
+  background: var(--slot);
+  box-shadow: inset 0 3px 6px rgb(0 0 0 / 45%);
+}
+
+.hint {
+  margin: 22px 4px 0;
+  color: var(--desk-muted);
+}
+
+.slip {
+  padding: 28px clamp(16px, 5vw, 24px) 36px;
+  background: var(--paper);
+  color: var(--paper-ink);
+  font-family: var(--font-paper);
+  font-size: 0.95rem;
+  line-height: 1.4;
+  /* Torn (zigzag) bottom edge. */
+  -webkit-mask:
+    linear-gradient(#000 0 0) top / 100% calc(100% - 10px) no-repeat,
+    conic-gradient(from 135deg at top, #0000, #000 1deg 89deg, #0000 90deg) bottom / 16px 10px
+      repeat-x;
+  mask:
+    linear-gradient(#000 0 0) top / 100% calc(100% - 10px) no-repeat,
+    conic-gradient(from 135deg at top, #0000, #000 1deg 89deg, #0000 90deg) bottom / 16px 10px
+      repeat-x;
+}
+
+.slip.print {
+  animation: print 0.55s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+@keyframes print {
+  from {
+    transform: translateY(-40%);
+    clip-path: inset(40% 0 0 0);
+  }
+
+  to {
+    transform: none;
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+.slip__header {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.slip__sub,
+.slip__foot {
+  color: var(--paper-muted);
+  font-size: 0.82rem;
+  text-align: center;
+}
+
+.slip__sub {
+  margin: 4px 0 18px;
+}
+
+.slip__foot {
+  margin: 18px 0 0;
+}
+
+.slip__rows {
+  margin: 0;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  column-gap: 6px;
+  padding: 5px 0;
+}
+
+.row dt {
+  flex: 0 1 auto;
+}
+
+.row dd {
+  display: flex;
+  flex: 1 0 auto;
+  align-items: baseline;
+  gap: 6px;
+  margin: 0;
+}
+
+.rate {
+  color: var(--paper-muted);
+}
+
+/* Dotted leader between the label and the amount (decorative). */
+.leader {
+  flex: 1 1 20px;
+  min-width: 12px;
+  border-bottom: 2px dotted var(--leader);
+  transform: translateY(-4px);
+}
+
+.amount {
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Dashed rules: after the gross salary and before the total. */
+.row--gross {
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px dashed var(--rule);
+}
+
+.row--total {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px dashed var(--rule);
+}
+
+/* Double rule above the net salary, the most prominent line. */
+.row--net {
+  justify-content: space-between;
+  row-gap: 4px;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 3px double var(--paper-ink);
+}
+
+.row--net dt {
+  font-weight: 700;
+}
+
+.row--net .leader {
+  border-bottom: 0;
+}
+
+.row--net .amount {
+  font-size: clamp(1.35rem, 6vw, 1.7rem);
+  font-weight: 700;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
 }

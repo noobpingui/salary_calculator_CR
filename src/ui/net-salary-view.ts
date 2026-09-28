@@ -34,7 +34,7 @@ const ratePercentFormatter = new Intl.NumberFormat('es-CR', {
 });
 
 /** Formats a basis-points rate as a percentage label, e.g. `550` -> `5,50 %`. */
-function formatRate(basisPoints: number): string {
+export function formatRate(basisPoints: number): string {
   return `${ratePercentFormatter.format(basisPoints / 100)} %`;
 }
 
