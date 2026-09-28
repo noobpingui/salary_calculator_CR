@@ -9,7 +9,7 @@
   "branch": "feat/002-ui-redesign",
   "base_branch": "main",
   "created_at": "2026-09-27T21:29:19.470Z",
-  "stage": "tests",
+  "stage": "implement",
   "status": "in_progress",
   "approvals": {
     "spec": {
@@ -24,7 +24,10 @@
       "at": "2026-09-27T23:19:36.851Z",
       "note": "approved, commit it, and yes to option a"
     },
-    "tests": null,
+    "tests": {
+      "at": "2026-09-28T06:36:24.015Z",
+      "note": "approved, commit it"
+    },
     "implement": null,
     "verify": null,
     "review": null,
@@ -33,7 +36,8 @@
   },
   "commits": {
     "spec": "ce9cd20",
-    "plan": "7f1c765"
+    "plan": "7f1c765",
+    "tasks": "e063869"
   },
   "iterations": {
     "tests": 0,
@@ -42,8 +46,8 @@
   },
   "max_iterations": 3,
   "red_check": {
-    "result": null,
-    "at": null
+    "result": "PASS",
+    "at": "2026-09-28T06:16:39.216Z"
   },
   "verify": {
     "result": null,
@@ -53,7 +57,19 @@
     "verdict": null,
     "at": null
   },
-  "tests_snapshot": null,
+  "tests_snapshot": {
+    "at": "2026-09-28T06:36:23.889Z",
+    "reason": "tests stage approved",
+    "sha256": {
+      "tests/dom/salary-form.test.ts": "b6f50856977c85f7b1e220dd0dac77b744fa4aeb52893b6bbf35e738fcd6e6d2",
+      "tests/support/css-audit.ts": "aedf9822afa53f538cff912a0c14294600653184a45b5135a1a2b1a8fdd9bd1b",
+      "tests/support/node-fs.d.ts": "62bc70134fbeb7b938ba283a1f592541669004e4eb247c545b3d30617acad85c",
+      "tests/unit/markup-audit.test.ts": "ef1c70268e98ee6d046c3eb089dacdc5afbed0ee9438839491ca66400c64e791",
+      "tests/unit/regression-001.test.ts": "82ab412ce98a739b0f6cf093e54cb03b75c27f00487cc19c81f929ff5ac725e5",
+      "tests/unit/result-area-view.test.ts": "7671fe7b843eaf0209e1bff934ebff798371c68907b2393b55a278567292df2e",
+      "tests/unit/style-audit.test.ts": "147823e8cabcc607123cc5a0f0307618444f9adc31e465e56327f70bf17a5456"
+    }
+  },
   "bypass": false,
   "history": [
     {
@@ -145,6 +161,42 @@
       "stage": "tests",
       "event": "note",
       "note": "Docs stage: doc-keeper must set ADR-0001/0002/0003 status to Accepted (user chose option a; planner blocked by role guard)"
+    },
+    {
+      "at": "2026-09-27T23:19:37.123Z",
+      "stage": "tests",
+      "event": "commit",
+      "note": "tasks: e063869"
+    },
+    {
+      "at": "2026-09-27T23:19:37.322Z",
+      "stage": "tests",
+      "event": "started",
+      "note": "Config/scaffold (T-001, T-002), then test-author"
+    },
+    {
+      "at": "2026-09-28T06:16:39.216Z",
+      "stage": "tests",
+      "event": "result",
+      "note": "red PASS: All 35 failing tests fail for missing behavior (legitimate red). All 12 passing new tests are legitimate (regression/absence checks). Pre-existing 001 tests: all 56 pass. Skeletons only throw 'not implemented'."
+    },
+    {
+      "at": "2026-09-28T06:36:23.796Z",
+      "stage": "tests",
+      "event": "done",
+      "note": "43 test tasks written; red check PASS (35 red, 12 legit green)"
+    },
+    {
+      "at": "2026-09-28T06:36:23.889Z",
+      "stage": "tests",
+      "event": "snapshot",
+      "note": "7 archivo(s) de test: tests stage approved"
+    },
+    {
+      "at": "2026-09-28T06:36:24.015Z",
+      "stage": "tests",
+      "event": "approved",
+      "note": "approved, commit it"
     }
   ]
 }

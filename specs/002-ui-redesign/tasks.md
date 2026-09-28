@@ -6,63 +6,63 @@
 ## Phase A0 — Environment setup and scaffolding (implementer)
 <!-- Step 0 (config) must land before Phase A's DOM test task, per plan §5 and Art. P1.3/B5.2: the red check must
      fail on missing behavior, not on missing packages or an undeclared jsdom environment. -->
-- [ ] T-001 [REQ-003, REQ-004, REQ-005, REQ-007] (config) Add `jsdom`, `@testing-library/dom`, `@testing-library/user-event` and `postcss` as devDependencies (update the lockfile with `npm install`) and create the empty `tests/dom/` directory for opt-in DOM tests; `vite.config.ts` keeps `environment: 'node'` — `package.json`
-- [ ] T-002 [REQ-002, REQ-003, REQ-004, REQ-005, REQ-006, REQ-007, REQ-008] (scaffold) Create `src/ui/result-area-view.ts` with the real `EMPTY_STATE_HINT` constant, the `EvaluationMode`, `ResultAreaView`, `ResultAreaKind` and `BreakdownLineRole` types, and the `presentResultArea`, `breakdownLineRole`, `isFieldInvalid` and `shouldRevealResult` signatures from plan §3.2, each throwing `new Error('not implemented')` — `src/ui/result-area-view.ts`
+- [x] T-001 [REQ-003, REQ-004, REQ-005, REQ-007] (config) Add `jsdom`, `@testing-library/dom`, `@testing-library/user-event` and `postcss` as devDependencies (update the lockfile with `npm install`) and create the empty `tests/dom/` directory for opt-in DOM tests; `vite.config.ts` keeps `environment: 'node'` — `package.json`
+- [x] T-002 [REQ-002, REQ-003, REQ-004, REQ-005, REQ-006, REQ-007, REQ-008] (scaffold) Create `src/ui/result-area-view.ts` with the real `EMPTY_STATE_HINT` constant, the `EvaluationMode`, `ResultAreaView`, `ResultAreaKind` and `BreakdownLineRole` types, and the `presentResultArea`, `breakdownLineRole`, `isFieldInvalid` and `shouldRevealResult` signatures from plan §3.2, each throwing `new Error('not implemented')` — `src/ui/result-area-view.ts`
 
 ## Phase A — Tests (test-author)
 
 ### `tests/unit/result-area-view.test.ts` (node)
-- [ ] T-003 [REQ-002, AC-002.1] (test) `presentResultArea` reproduces the 001 breakdown, labels, order and legal-year note for a valid gross salary, in both `live` and `submit` modes — `tests/unit/result-area-view.test.ts`
-- [ ] T-004 [REQ-002, AC-002.2] (test) `presentResultArea` reproduces the 001 error messages for empty, non-numeric, negative and over-precision inputs — `tests/unit/result-area-view.test.ts`
-- [ ] T-005 [REQ-003, AC-003.5] (test) `presentResultArea` returns the same breakdown or error for the same non-empty input regardless of evaluation mode — `tests/unit/result-area-view.test.ts`
-- [ ] T-006 [REQ-005, AC-005.2] (test) `presentResultArea` returns the empty state for an empty or whitespace-only input evaluated `live` — `tests/unit/result-area-view.test.ts`
-- [ ] T-007 [REQ-005, AC-005.3] (test) `presentResultArea` returns the 001 empty-value error for an empty or whitespace-only input evaluated as `submit` — `tests/unit/result-area-view.test.ts`
-- [ ] T-008 [REQ-006, AC-006.2] (test) `presentResultArea` returns exactly seven breakdown lines with "Salario neto" last and no added sign or prefix — `tests/unit/result-area-view.test.ts`
-- [ ] T-009 [REQ-006] (test) `breakdownLineRole` maps the first, last, second-to-last and a middle index to `gross`, `net`, `total` and `deduction` — `tests/unit/result-area-view.test.ts`
-- [ ] T-010 [REQ-007] (test) `isFieldInvalid` returns `true` only when the view kind is `error` — `tests/unit/result-area-view.test.ts`
-- [ ] T-011 [REQ-008] (test) `shouldRevealResult` returns `true` only when the result-area kind changes, and stays `false` across repeated `result` updates — `tests/unit/result-area-view.test.ts`
-- [ ] T-012 [NFR-001, AC-N001.1] (test) producing a result through `presentResultArea` calls no stubbed network or storage global (same pattern as `privacy.test.ts`) — `tests/unit/result-area-view.test.ts`
+- [x] T-003 [REQ-002, AC-002.1] (test) `presentResultArea` reproduces the 001 breakdown, labels, order and legal-year note for a valid gross salary, in both `live` and `submit` modes — `tests/unit/result-area-view.test.ts`
+- [x] T-004 [REQ-002, AC-002.2] (test) `presentResultArea` reproduces the 001 error messages for empty, non-numeric, negative and over-precision inputs — `tests/unit/result-area-view.test.ts`
+- [x] T-005 [REQ-003, AC-003.5] (test) `presentResultArea` returns the same breakdown or error for the same non-empty input regardless of evaluation mode — `tests/unit/result-area-view.test.ts`
+- [x] T-006 [REQ-005, AC-005.2] (test) `presentResultArea` returns the empty state for an empty or whitespace-only input evaluated `live` — `tests/unit/result-area-view.test.ts`
+- [x] T-007 [REQ-005, AC-005.3] (test) `presentResultArea` returns the 001 empty-value error for an empty or whitespace-only input evaluated as `submit` — `tests/unit/result-area-view.test.ts`
+- [x] T-008 [REQ-006, AC-006.2] (test) `presentResultArea` returns exactly seven breakdown lines with "Salario neto" last and no added sign or prefix — `tests/unit/result-area-view.test.ts`
+- [x] T-009 [REQ-006] (test) `breakdownLineRole` maps the first, last, second-to-last and a middle index to `gross`, `net`, `total` and `deduction` — `tests/unit/result-area-view.test.ts`
+- [x] T-010 [REQ-007] (test) `isFieldInvalid` returns `true` only when the view kind is `error` — `tests/unit/result-area-view.test.ts`
+- [x] T-011 [REQ-008] (test) `shouldRevealResult` returns `true` only when the result-area kind changes, and stays `false` across repeated `result` updates — `tests/unit/result-area-view.test.ts`
+- [x] T-012 [NFR-001, AC-N001.1] (test) producing a result through `presentResultArea` calls no stubbed network or storage global (same pattern as `privacy.test.ts`) — `tests/unit/result-area-view.test.ts`
 
 ### `tests/unit/style-audit.test.ts` (node) and its support helper
-- [ ] T-013 [REQ-001] (test) create the test support helper with `postcss` parsing, per-scheme `:root` token resolution, `isAchromatic`, `relativeLuminance`/`contrastRatio` and duration parsing — `tests/support/css-audit.ts`
-- [ ] T-014 [REQ-001, AC-001.1] (test) every color value declared in the stylesheet, and in the markup `src/main.ts` produces, resolves to an achromatic value in both color schemes — `tests/unit/style-audit.test.ts`
-- [ ] T-015 [REQ-001, AC-001.2] (test) the error-message rules use an achromatic color and the stylesheet source contains no `#b00020` — `tests/unit/style-audit.test.ts`
-- [ ] T-016 [REQ-001, AC-001.3] (test) the stylesheet uses no chromatic named color keyword (`red`, `green`, `blue`, etc.) as a color value — `tests/unit/style-audit.test.ts`
-- [ ] T-017 [REQ-006, AC-006.1] (test) the "Salario neto" line's amount has a larger font size and at least as heavy a font weight as any other breakdown line, at base size and inside the `min-width` media query — `tests/unit/style-audit.test.ts`
-- [ ] T-018 [REQ-006, AC-006.3] (test) "Total de rebajas" and "Salario neto" are separated from the lines above them by a visible achromatic divider or spacing rule — `tests/unit/style-audit.test.ts`
-- [ ] T-019 [REQ-008, AC-008.1] (test) no transition or animation duration plus delay, after `var()` resolution, exceeds 300ms anywhere in the stylesheet — `tests/unit/style-audit.test.ts`
-- [ ] T-020 [REQ-008, AC-008.2] (test) at least one transition or animation applies to the result area, and at least one to the field/button hover or focus state — `tests/unit/style-audit.test.ts`
-- [ ] T-021 [REQ-009, AC-009.1] (test) the stylesheet defines a light scheme and a dark scheme selected by the `prefers-color-scheme` preference, and every color token in both is achromatic — `tests/unit/style-audit.test.ts`
-- [ ] T-022 [NFR-001, AC-N001.2] (test) the stylesheet contains no `http://`/`https://`/`//` URL and no remote `@import` — `tests/unit/style-audit.test.ts`
-- [ ] T-023 [NFR-001, AC-N001.3] (test) the stylesheet declares only system font families (the plan's allowlist) and no `@font-face` rule — `tests/unit/style-audit.test.ts`
-- [ ] T-024 [NFR-002, AC-N002.1] (test) the field and "Calcular" button each have a visible achromatic `:focus-visible` indicator, and no rule sets `outline: none` without replacing it — `tests/unit/style-audit.test.ts`
-- [ ] T-025 [NFR-002, AC-N002.2] (test) a `prefers-reduced-motion: reduce` rule sets every transition and animation duration to `none` or `0` for the whole page — `tests/unit/style-audit.test.ts`
-- [ ] T-026 [NFR-002, AC-N002.3] (test) the resolved normal-text, large-text and border/focus color pairs meet WCAG 2.2 AA contrast (4.5:1, 3:1, 3:1) in both schemes — `tests/unit/style-audit.test.ts`
-- [ ] T-027 [NFR-003, AC-N003.1] (test) the field and "Calcular" button have a minimum height of at least 44px (2.75rem at the default root size) — `tests/unit/style-audit.test.ts`
-- [ ] T-028 [NFR-003, AC-N003.2] (test) static layout proxy: the breakdown grid columns, label wrapping (`overflow-wrap: anywhere`, no forced `nowrap` on `dt`), the absence of fixed widths above 18rem, and the base `--text-net` size are consistent with fitting the 320px viewport (per plan §5; complemented by the manual check the verifier performs and records in `verify-report.md`, not by an automated task) — `tests/unit/style-audit.test.ts`
+- [x] T-013 [REQ-001] (test) create the test support helper with `postcss` parsing, per-scheme `:root` token resolution, `isAchromatic`, `relativeLuminance`/`contrastRatio` and duration parsing — `tests/support/css-audit.ts`
+- [x] T-014 [REQ-001, AC-001.1] (test) every color value declared in the stylesheet, and in the markup `src/main.ts` produces, resolves to an achromatic value in both color schemes — `tests/unit/style-audit.test.ts`
+- [x] T-015 [REQ-001, AC-001.2] (test) the error-message rules use an achromatic color and the stylesheet source contains no `#b00020` — `tests/unit/style-audit.test.ts`
+- [x] T-016 [REQ-001, AC-001.3] (test) the stylesheet uses no chromatic named color keyword (`red`, `green`, `blue`, etc.) as a color value — `tests/unit/style-audit.test.ts`
+- [x] T-017 [REQ-006, AC-006.1] (test) the "Salario neto" line's amount has a larger font size and at least as heavy a font weight as any other breakdown line, at base size and inside the `min-width` media query — `tests/unit/style-audit.test.ts`
+- [x] T-018 [REQ-006, AC-006.3] (test) "Total de rebajas" and "Salario neto" are separated from the lines above them by a visible achromatic divider or spacing rule — `tests/unit/style-audit.test.ts`
+- [x] T-019 [REQ-008, AC-008.1] (test) no transition or animation duration plus delay, after `var()` resolution, exceeds 300ms anywhere in the stylesheet — `tests/unit/style-audit.test.ts`
+- [x] T-020 [REQ-008, AC-008.2] (test) at least one transition or animation applies to the result area, and at least one to the field/button hover or focus state — `tests/unit/style-audit.test.ts`
+- [x] T-021 [REQ-009, AC-009.1] (test) the stylesheet defines a light scheme and a dark scheme selected by the `prefers-color-scheme` preference, and every color token in both is achromatic — `tests/unit/style-audit.test.ts`
+- [x] T-022 [NFR-001, AC-N001.2] (test) the stylesheet contains no `http://`/`https://`/`//` URL and no remote `@import` — `tests/unit/style-audit.test.ts`
+- [x] T-023 [NFR-001, AC-N001.3] (test) the stylesheet declares only system font families (the plan's allowlist) and no `@font-face` rule — `tests/unit/style-audit.test.ts`
+- [x] T-024 [NFR-002, AC-N002.1] (test) the field and "Calcular" button each have a visible achromatic `:focus-visible` indicator, and no rule sets `outline: none` without replacing it — `tests/unit/style-audit.test.ts`
+- [x] T-025 [NFR-002, AC-N002.2] (test) a `prefers-reduced-motion: reduce` rule sets every transition and animation duration to `none` or `0` for the whole page — `tests/unit/style-audit.test.ts`
+- [x] T-026 [NFR-002, AC-N002.3] (test) the resolved normal-text, large-text and border/focus color pairs meet WCAG 2.2 AA contrast (4.5:1, 3:1, 3:1) in both schemes — `tests/unit/style-audit.test.ts`
+- [x] T-027 [NFR-003, AC-N003.1] (test) the field and "Calcular" button have a minimum height of at least 44px (2.75rem at the default root size) — `tests/unit/style-audit.test.ts`
+- [x] T-028 [NFR-003, AC-N003.2] (test) static layout proxy: the breakdown grid columns, label wrapping (`overflow-wrap: anywhere`, no forced `nowrap` on `dt`), the absence of fixed widths above 18rem, and the base `--text-net` size are consistent with fitting the 320px viewport (per plan §5; complemented by the manual check the verifier performs and records in `verify-report.md`, not by an automated task) — `tests/unit/style-audit.test.ts`
 
 ### `tests/unit/markup-audit.test.ts` (node)
-- [ ] T-029 [REQ-001, AC-001.1] (test) the markup `src/main.ts` produces and `index.html` have no `style` attribute and no `.style.` usage, and the `theme-color` meta values are achromatic — `tests/unit/markup-audit.test.ts`
-- [ ] T-030 [REQ-001, AC-001.2] (test) `#b00020` does not appear anywhere under `src/**` or in `index.html` — `tests/unit/markup-audit.test.ts`
-- [ ] T-031 [REQ-009, AC-009.2] (test) the page source has no control to switch color schemes and no `localStorage`/`sessionStorage`/cookie reference storing a scheme preference — `tests/unit/markup-audit.test.ts`
-- [ ] T-032 [NFR-001, AC-N001.2] (test) `index.html` and the markup `src/main.ts` produces contain no `http://`/`https://`/`//` URL — `tests/unit/markup-audit.test.ts`
-- [ ] T-033 [NFR-002, AC-N002.4] (test) the document language stays `es-CR`, the field keeps its visible label "Salario bruto mensual (CRC)", and the result area stays a polite live region — `tests/unit/markup-audit.test.ts`
+- [x] T-029 [REQ-001, AC-001.1] (test) the markup `src/main.ts` produces and `index.html` have no `style` attribute and no `.style.` usage, and the `theme-color` meta values are achromatic — `tests/unit/markup-audit.test.ts`
+- [x] T-030 [REQ-001, AC-001.2] (test) `#b00020` does not appear anywhere under `src/**` or in `index.html` — `tests/unit/markup-audit.test.ts`
+- [x] T-031 [REQ-009, AC-009.2] (test) the page source has no control to switch color schemes and no `localStorage`/`sessionStorage`/cookie reference storing a scheme preference — `tests/unit/markup-audit.test.ts`
+- [x] T-032 [NFR-001, AC-N001.2] (test) `index.html` and the markup `src/main.ts` produces contain no `http://`/`https://`/`//` URL — `tests/unit/markup-audit.test.ts`
+- [x] T-033 [NFR-002, AC-N002.4] (test) the document language stays `es-CR`, the field keeps its visible label "Salario bruto mensual (CRC)", and the result area stays a polite live region — `tests/unit/markup-audit.test.ts`
 
 ### `tests/unit/regression-001.test.ts` (node)
-- [ ] T-034 [REQ-002, AC-002.3] (test) every existing 001 test file under `tests/unit/` still contains its 001 `SDD:` markers and no `.skip`/`.only`/`.todo` after this feature — `tests/unit/regression-001.test.ts`
+- [x] T-034 [REQ-002, AC-002.3] (test) every existing 001 test file under `tests/unit/` still contains its 001 `SDD:` markers and no `.skip`/`.only`/`.todo` after this feature — `tests/unit/regression-001.test.ts`
 
 ### `tests/dom/salary-form.test.ts` (jsdom, opt-in per ADR-0002)
-- [ ] T-035 [REQ-003, AC-003.1] (test) typing a valid value into the empty field shows the matching breakdown live, without submitting — `tests/dom/salary-form.test.ts`
-- [ ] T-036 [REQ-003, AC-003.2] (test) editing a shown breakdown's value replaces it fully with the new breakdown, with no leftover amount from the previous value — `tests/dom/salary-form.test.ts`
-- [ ] T-037 [REQ-003, AC-003.3] (test) typing a non-empty invalid value live shows the matching 001 error and no breakdown — `tests/dom/salary-form.test.ts`
-- [ ] T-038 [REQ-003, AC-003.4] (test) clearing the field completely while typing returns the result area to the empty state with no error message — `tests/dom/salary-form.test.ts`
-- [ ] T-039 [REQ-004, AC-004.1] (test) activating "Calcular" with an empty field shows the empty-value error and no breakdown — `tests/dom/salary-form.test.ts`
-- [ ] T-040 [REQ-004, AC-004.2] (test) pressing Enter in the field with a valid value shows the matching breakdown — `tests/dom/salary-form.test.ts`
-- [ ] T-041 [REQ-004, AC-004.3] (test) tabbing from page load moves focus to the field then the "Calcular" button, in that order — `tests/dom/salary-form.test.ts`
-- [ ] T-042 [REQ-005, AC-005.1] (test) on page load, before typing anything, the result area shows the empty-state hint and no error message — `tests/dom/salary-form.test.ts`
-- [ ] T-043 [REQ-007, AC-007.1] (test) an invalid value marks the field invalid for assistive technologies and exposes the matching message as an alert — `tests/dom/salary-form.test.ts`
-- [ ] T-044 [REQ-007, AC-007.2] (test) fixing an invalid value to a valid one removes the invalid field state and the error message — `tests/dom/salary-form.test.ts`
-- [ ] T-045 [REQ-007, AC-007.3] (test) the error element's text content is exactly the 001 message, with no added characters — `tests/dom/salary-form.test.ts`
+- [x] T-035 [REQ-003, AC-003.1] (test) typing a valid value into the empty field shows the matching breakdown live, without submitting — `tests/dom/salary-form.test.ts`
+- [x] T-036 [REQ-003, AC-003.2] (test) editing a shown breakdown's value replaces it fully with the new breakdown, with no leftover amount from the previous value — `tests/dom/salary-form.test.ts`
+- [x] T-037 [REQ-003, AC-003.3] (test) typing a non-empty invalid value live shows the matching 001 error and no breakdown — `tests/dom/salary-form.test.ts`
+- [x] T-038 [REQ-003, AC-003.4] (test) clearing the field completely while typing returns the result area to the empty state with no error message — `tests/dom/salary-form.test.ts`
+- [x] T-039 [REQ-004, AC-004.1] (test) activating "Calcular" with an empty field shows the empty-value error and no breakdown — `tests/dom/salary-form.test.ts`
+- [x] T-040 [REQ-004, AC-004.2] (test) pressing Enter in the field with a valid value shows the matching breakdown — `tests/dom/salary-form.test.ts`
+- [x] T-041 [REQ-004, AC-004.3] (test) tabbing from page load moves focus to the field then the "Calcular" button, in that order — `tests/dom/salary-form.test.ts`
+- [x] T-042 [REQ-005, AC-005.1] (test) on page load, before typing anything, the result area shows the empty-state hint and no error message — `tests/dom/salary-form.test.ts`
+- [x] T-043 [REQ-007, AC-007.1] (test) an invalid value marks the field invalid for assistive technologies and exposes the matching message as an alert — `tests/dom/salary-form.test.ts`
+- [x] T-044 [REQ-007, AC-007.2] (test) fixing an invalid value to a valid one removes the invalid field state and the error message — `tests/dom/salary-form.test.ts`
+- [x] T-045 [REQ-007, AC-007.3] (test) the error element's text content is exactly the 001 message, with no added characters — `tests/dom/salary-form.test.ts`
 
 ## Phase B — Implementation (implementer)
 <!-- Dependency order: UI view logic (pure, no DOM) -> stylesheet tokens/rules -> markup metas -> entry point wiring
