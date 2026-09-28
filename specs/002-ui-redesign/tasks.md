@@ -69,23 +69,23 @@
      that consumes both. Each impl task is done when the (test) tasks covering the same ACs pass. -->
 
 ### UI view logic
-- [ ] T-046 [REQ-002, REQ-003, REQ-004, REQ-005] (impl) implement `presentResultArea`: delegate to `presentNetSalary` and return the empty state only for a blank/whitespace input evaluated `live` (plan §3.3) — `src/ui/result-area-view.ts`
-- [ ] T-047 [REQ-006, REQ-007, REQ-008] (impl) implement `breakdownLineRole`, `isFieldInvalid` and `shouldRevealResult` per their exact rules in plan §3.3 — `src/ui/result-area-view.ts`
+- [x] T-046 [REQ-002, REQ-003, REQ-004, REQ-005] (impl) implement `presentResultArea`: delegate to `presentNetSalary` and return the empty state only for a blank/whitespace input evaluated `live` (plan §3.3) — `src/ui/result-area-view.ts`
+- [x] T-047 [REQ-006, REQ-007, REQ-008] (impl) implement `breakdownLineRole`, `isFieldInvalid` and `shouldRevealResult` per their exact rules in plan §3.3 — `src/ui/result-area-view.ts`
 
 ### Styles
-- [ ] T-048 [REQ-001, REQ-009] (impl) define the achromatic color design tokens in `:root` (light scheme) and redefine only the `--color-*` tokens under `@media (prefers-color-scheme: dark)` — `src/style.css`
-- [ ] T-049 [REQ-006, REQ-008, NFR-002, NFR-003] (impl) define typography, spacing, motion and touch-target size tokens (`--font-*`, `--text-*`, `--weight-*`, `--space-*`, `--size-target`, `--motion-*`, `--ease-out`) — `src/style.css`
-- [ ] T-050 [REQ-006] (impl) style the breakdown lines by role (`.line--gross/deduction/total/net`), the "Salario neto" emphasis, and the dividers above "Total de rebajas" and "Salario neto" — `src/style.css`
-- [ ] T-051 [REQ-001, REQ-007] (impl) style the error state (font weight, left bar, thickened invalid field underline) using only achromatic tokens, with no color-only cue — `src/style.css`
-- [ ] T-052 [REQ-008] (impl) add the result-area reveal animation and the field/button hover and focus transitions, each at most 300ms — `src/style.css`
-- [ ] T-053 [NFR-002] (impl) add `:focus-visible` outlines for the field and button and the `prefers-reduced-motion` block that zeroes every transition and animation — `src/style.css`
-- [ ] T-054 [NFR-003] (impl) add the responsive single-column/two-column layout, the field/button minimum touch-target height, and the label-wrapping/amount-nowrap rules — `src/style.css`
+- [x] T-048 [REQ-001, REQ-009] (impl) define the achromatic color design tokens in `:root` (light scheme) and redefine only the `--color-*` tokens under `@media (prefers-color-scheme: dark)` — `src/style.css`
+- [x] T-049 [REQ-006, REQ-008, NFR-002, NFR-003] (impl) define typography, spacing, motion and touch-target size tokens (`--font-*`, `--text-*`, `--weight-*`, `--space-*`, `--size-target`, `--motion-*`, `--ease-out`) — `src/style.css`
+- [x] T-050 [REQ-006] (impl) style the breakdown lines by role (`.line--gross/deduction/total/net`), the "Salario neto" emphasis, and the dividers above "Total de rebajas" and "Salario neto" — `src/style.css`
+- [x] T-051 [REQ-001, REQ-007] (impl) style the error state (font weight, left bar, thickened invalid field underline) using only achromatic tokens, with no color-only cue — `src/style.css`
+- [x] T-052 [REQ-008] (impl) add the result-area reveal animation and the field/button hover and focus transitions, each at most 300ms — `src/style.css`
+- [x] T-053 [NFR-002] (impl) add `:focus-visible` outlines for the field and button and the `prefers-reduced-motion` block that zeroes every transition and animation — `src/style.css`
+- [x] T-054 [NFR-003] (impl) add the responsive single-column/two-column layout, the field/button minimum touch-target height, and the label-wrapping/amount-nowrap rules — `src/style.css`
 
 ### Markup and entry point
-- [ ] T-055 [REQ-009] (impl) add the `color-scheme` and achromatic `theme-color` meta tags, with `lang="es-CR"` kept unchanged — `index.html`
-- [ ] T-056 [REQ-003, REQ-004] (impl) wire the field's `input` listener and the form's `submit` listener (with `preventDefault`) in `src/main.ts` to call `presentResultArea` with the `live`/`submit` mode — `src/main.ts`
-- [ ] T-057 [REQ-005, REQ-006, REQ-007] (impl) render the empty, error and breakdown states in `src/main.ts` with `data-state`, `line--{role}` classes, `aria-invalid`/`aria-describedby` and `replaceChildren` — `src/main.ts`
-- [ ] T-058 [REQ-008] (impl) track the previous result-area kind in `src/main.ts` and apply the `reveal` class based on `shouldRevealResult` — `src/main.ts`
+- [x] T-055 [REQ-009] (impl) add the `color-scheme` and achromatic `theme-color` meta tags, with `lang="es-CR"` kept unchanged — `index.html`
+- [x] T-056 [REQ-003, REQ-004] (impl) wire the field's `input` listener and the form's `submit` listener (with `preventDefault`) in `src/main.ts` to call `presentResultArea` with the `live`/`submit` mode — `src/main.ts`
+- [x] T-057 [REQ-005, REQ-006, REQ-007] (impl) render the empty, error and breakdown states in `src/main.ts` with `data-state`, `line--{role}` classes, `aria-invalid`/`aria-describedby` and `replaceChildren` — `src/main.ts`
+- [x] T-058 [REQ-008] (impl) track the previous result-area kind in `src/main.ts` and apply the `reveal` class based on `shouldRevealResult` — `src/main.ts`
 
 ## Coverage matrix
 
